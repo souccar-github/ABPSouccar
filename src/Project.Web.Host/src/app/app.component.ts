@@ -2,14 +2,18 @@ import { Component, Injector, OnInit, Renderer2 } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
+import { ISidebar, SidebarService } from '@shared/service-proxies/sidebar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './app.component.html'
 })
 export class AppComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;
-
+  sidebar: ISidebar;
+  subscription: Subscription;
   constructor(
+    private sidebarService: SidebarService,
     injector: Injector,
     private renderer: Renderer2,
     private _layoutStore: LayoutStoreService
@@ -18,7 +22,14 @@ export class AppComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.renderer.addClass(document.body, 'sidebar-mini');
+    this.subscription = this.sidebarService.getSidebar().subscribe(
+      res => {
+        this.sidebar = res;
+      },
+      err => {
+        console.error(`An error occurred: ${err.message}`);
+      }
+    );
 
     SignalRAspNetCoreHelper.initSignalR();
 
@@ -41,8 +52,15 @@ export class AppComponent extends AppComponentBase implements OnInit {
       this.sidebarExpanded = value;
     });
   }
-
-  toggleSidebar(): void {
-    this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.renderer.addClass(document.body, 'show');
+    }, 1000);
+    setTimeout(() => {
+      this.renderer.addClass(document.body, 'default-transition');
+    }, 1500);
   }
 }

@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
-import { HomeComponent } from '@app/home/home.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AboutComponent } from '@app/about/about.component';
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
@@ -31,18 +31,17 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
 // layout
 import { HeaderComponent } from './layout/header.component';
 import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
-import { HeaderLanguageMenuComponent } from './layout/header-language-menu.component';
+import { HeaderLogoComponent } from './layout/header-logo.component';
 import { HeaderUserMenuComponent } from './layout/header-user-menu.component';
 import { FooterComponent } from './layout/footer.component';
+import { BreadcrumbComponent } from './layout/breadcrumb.component';
+import { ApplicationMenuComponent } from './layout/application-menu.component';
 import { SidebarComponent } from './layout/sidebar.component';
-import { SidebarLogoComponent } from './layout/sidebar-logo.component';
-import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
-import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import {ComponentsStateButtonModule} from './widgets/state-button/components.state-button.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     AboutComponent,
     // tenants
     TenantsComponent,
@@ -61,13 +60,13 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     // layout
     HeaderComponent,
     HeaderLeftNavbarComponent,
-    HeaderLanguageMenuComponent,
+    HeaderLogoComponent,
     HeaderUserMenuComponent,
     FooterComponent,
+    ApplicationMenuComponent,
+    BreadcrumbComponent,
     SidebarComponent,
-    SidebarLogoComponent,
-    SidebarUserPanelComponent,
-    SidebarMenuComponent
+    
   ],
   imports: [
     CommonModule,
@@ -78,13 +77,17 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     ModalModule.forChild(),
     BsDropdownModule,
     CollapseModule,
+    PerfectScrollbarModule,
     TabsModule,
     AppRoutingModule,
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    ComponentsStateButtonModule,
   ],
-  providers: [],
+  providers: [
+    SidebarComponent,
+  ],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

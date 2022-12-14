@@ -15,9 +15,13 @@ namespace Project.Employees.Indecies.Advices
         public async Task AfterUpdateAsync(IInvocation invocation){}
         public async Task BeforeDeleteAsync(IInvocation invocation){}
         public async Task BeforeInsertAsync(IInvocation invocation){}
-        public async Task BeforeReadAsync(IInvocation invocation){}
+        public async Task BeforeReadAsync(IInvocation invocation){
+            var s = true;
+        }
         public async Task BeforeUpdateAsync(IInvocation invocation){}
-        public void BeforeRead(IInvocation invocation){}
+        public void BeforeRead(IInvocation invocation){
+            var s = true;
+        }
         public void AfterRead(IInvocation invocation){}
     }
 }

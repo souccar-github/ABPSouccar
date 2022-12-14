@@ -19,7 +19,7 @@ namespace Project.Employees.RootEntities
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
         public Nationality Nationality { get; set; }
         public IList<Country> Countries { get; set; }
         public IList<Children> Children { get; set; }

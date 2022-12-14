@@ -16,38 +16,28 @@ import { NgxPaginationModule } from "ngx-pagination";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ServiceProxyModule } from "../shared/service-proxies/service-proxy.module";
 import { SharedModule } from "../shared/shared.module";
-import { HomeComponent } from "../app/home/home.component";
-import { AboutComponent } from "../app/about/about.component";
 
 // layout
 import { HeaderComponent } from "./layout/header.component";
 import { HeaderLeftNavbarComponent } from "./layout/header-left-navbar.component";
-import { HeaderLanguageMenuComponent } from "./layout/header-language-menu.component";
+import { HeaderLogoComponent } from "./layout/header-logo.component";
 import { HeaderUserMenuComponent } from "./layout/header-user-menu.component";
 import { FooterComponent } from "./layout/footer.component";
 import { SidebarComponent } from "./layout/sidebar.component";
-import { SidebarLogoComponent } from "./layout/sidebar-logo.component";
-import { SidebarUserPanelComponent } from "./layout/sidebar-user-panel.component";
-import { SidebarMenuComponent } from "./layout/sidebar-menu.component";
 
 describe("AppComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        HomeComponent,
-        AboutComponent,
 
         // layout
         HeaderComponent,
         HeaderLeftNavbarComponent,
-        HeaderLanguageMenuComponent,
+        HeaderLogoComponent,
         HeaderUserMenuComponent,
         FooterComponent,
         SidebarComponent,
-        SidebarLogoComponent,
-        SidebarUserPanelComponent,
-        SidebarMenuComponent,
       ],
       imports: [
         BrowserAnimationsModule,
