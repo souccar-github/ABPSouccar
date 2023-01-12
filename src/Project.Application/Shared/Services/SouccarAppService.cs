@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Souccar.Services
 {
-    public class SouccarAppService<TEntity, TEntityDto,TCreateEntityDto,TUpdateEntityDto> : ProjectAppServiceBase, ISouccarAppService<TEntityDto, TCreateEntityDto, TUpdateEntityDto> 
+    public class SouccarAppService<TEntity, TEntityDto,TCreateEntityDto,TUpdateEntityDto,TReadEntityDto> : ProjectAppServiceBase, ISouccarAppService<TEntityDto, TCreateEntityDto, TUpdateEntityDto, TReadEntityDto> 
         where TEntity : class, IEntity<int> 
         where TEntityDto : class, IEntityDto<int>
         where TCreateEntityDto : class, IEntityDto<int>
         where TUpdateEntityDto : class, IEntityDto<int>
+        where TReadEntityDto : class, IEntityDto<int>
     {
         private readonly ICrudDomainService<TEntity> _domainService;
         public SouccarAppService(ICrudDomainService<TEntity> domainService)
@@ -20,16 +21,16 @@ namespace Souccar.Services
             _domainService = domainService;
         }
 
-        public virtual async Task<IList<TEntityDto>> GetAllIncludingAsync()
+        public virtual async Task<IList<TReadEntityDto>> GetAllIncludingAsync()
         {
             var data = _domainService.GetAllIncluding();
-            var list = ObjectMapper.Map<List<TEntityDto>>(data.ToList());
+            var list = ObjectMapper.Map<List<TReadEntityDto>>(data.ToList());
             return list;
         }
-        public virtual async Task<IList<TEntityDto>> GetAllAsync()
+        public virtual async Task<IList<TReadEntityDto>> GetAllAsync()
         {
             var data = await _domainService.GetAllAsync();
-            return ObjectMapper.Map<IList<TEntityDto>>(data);
+            return ObjectMapper.Map<IList<TReadEntityDto>>(data);
         }
 
 

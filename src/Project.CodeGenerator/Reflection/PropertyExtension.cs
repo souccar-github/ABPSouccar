@@ -9,14 +9,34 @@ namespace Project.CodeGenerator
 {
     public static  class PropertyExtension
     {
-        public static string GetText(this PropertyInfo propertyInfo,bool isLowerCase)
+        public static string GetRefText(this PropertyInfo propertyInfo,string _prefix)
+        {
+            var propType = propertyInfo.PropertyType.Name;
+            var name = propertyInfo.Name;
+            return $"public {_prefix}{propType}Dto {name} " + "{ get; set; }";
+        }
+        public static string GetListText(this PropertyInfo propertyInfo,string _prefix)
+        {
+            var propType = propertyInfo.PropertyType.GetProperties().FirstOrDefault().PropertyType.Name;
+            var name = propertyInfo.Name;
+
+            return $"public List<{_prefix}{propType}Dto> {name} " + "{ get; set; }";
+        }
+        public static string GetEnumText(this PropertyInfo propertyInfo)
+        {
+            var name = propertyInfo.Name;
+            var propType = propertyInfo.PropertyType.GenericTypeArguments[0].Name;
+
+            return $"public {propType} {name} " + "{ get; set; }";
+        }
+        public static string GetText(this PropertyInfo propertyInfo)
         {
             var propType = string.Empty;
-            if(propertyInfo.PropertyType == typeof(String))
+            if (propertyInfo.PropertyType == typeof(String))
             {
                 propType = "string";
             }
-            else if(propertyInfo.PropertyType == typeof(Boolean))
+            else if (propertyInfo.PropertyType == typeof(Boolean))
             {
                 propType = "bool";
             }
@@ -48,7 +68,7 @@ namespace Project.CodeGenerator
             {
                 propType = "int?";
             }
-            else if( propertyInfo.PropertyType == typeof(Double))
+            else if (propertyInfo.PropertyType == typeof(Double))
             {
                 propType = "double";
             }
@@ -60,7 +80,7 @@ namespace Project.CodeGenerator
             {
                 propType = "int";
             }
-            else if(propertyInfo.PropertyType == typeof(Decimal))
+            else if (propertyInfo.PropertyType == typeof(Decimal))
             {
                 propType = "decimal";
             }
@@ -81,8 +101,6 @@ namespace Project.CodeGenerator
                 return propType;
 
             var name = propertyInfo.Name;
-            if (isLowerCase)
-                name = name.FirstCharToLowerCase();
 
             return $"public {propType} {name} " + "{ get; set; }";
         }

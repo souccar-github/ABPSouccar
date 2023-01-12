@@ -8,7 +8,7 @@ using Souccar.Services;
 
 namespace Project.Employees.Entities.Services
 {
-    public interface IChildrenAppService : ISouccarAppService<ChildrenDto,CreateChildrenDto,UpdateChildrenDto>
+    public interface IChildrenAppService : ISouccarAppService<ChildrenDto,CreateChildrenDto,UpdateChildrenDto,ReadChildrenDto>
     {
     }
 }

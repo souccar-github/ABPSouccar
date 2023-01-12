@@ -7,7 +7,7 @@ using Souccar.Services;
 
 namespace Project.Employees.RootEntities.Services
 {
-    public class EmployeeAppService : SouccarAppService<Employee,EmployeeDto,CreateEmployeeDto,UpdateEmployeeDto>, IEmployeeAppService
+    public class EmployeeAppService : SouccarAppService<Employee,EmployeeDto,CreateEmployeeDto,UpdateEmployeeDto,ReadEmployeeDto>, IEmployeeAppService
     {
         private readonly IEmployeeDomainService _employeeDomainService;
         public EmployeeAppService(IEmployeeDomainService employeeDomainService) : base(employeeDomainService)

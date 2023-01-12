@@ -9,5 +9,6 @@ namespace Project.Souccar.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class SouccarUIPAttribute : Attribute
     {
+        public bool ForGridView { get; set; }
     }
 }
