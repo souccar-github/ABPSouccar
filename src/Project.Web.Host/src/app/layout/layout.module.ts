@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { HeaderLeftNavbarComponent } from './header/header-left-navbar.component';
@@ -27,6 +27,9 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     ContentTemplateModule,
     PerfectScrollbarModule,
 
-  ]
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA
+  ],
 })
 export class LayoutModule { }
