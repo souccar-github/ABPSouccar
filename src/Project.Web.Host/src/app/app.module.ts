@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
@@ -29,15 +29,9 @@ import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.c
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 // layout
-import { HeaderComponent } from './layout/header.component';
-import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
-import { HeaderLogoComponent } from './layout/header-logo.component';
-import { HeaderUserMenuComponent } from './layout/header-user-menu.component';
-import { FooterComponent } from './layout/footer.component';
-import { BreadcrumbComponent } from './layout/breadcrumb.component';
-import { ApplicationMenuComponent } from './layout/application-menu.component';
-import { SidebarComponent } from './layout/sidebar.component';
 import {ComponentsStateButtonModule} from './widgets/state-button/components.state-button.module';
+import {LayoutModule} from './layout/layout.module';
+
 
 @NgModule({
   declarations: [
@@ -57,16 +51,6 @@ import {ComponentsStateButtonModule} from './widgets/state-button/components.sta
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
-    // layout
-    HeaderComponent,
-    HeaderLeftNavbarComponent,
-    HeaderLogoComponent,
-    HeaderUserMenuComponent,
-    FooterComponent,
-    ApplicationMenuComponent,
-    BreadcrumbComponent,
-    SidebarComponent,
-    
   ],
   imports: [
     CommonModule,
@@ -84,9 +68,12 @@ import {ComponentsStateButtonModule} from './widgets/state-button/components.sta
     SharedModule,
     NgxPaginationModule,
     ComponentsStateButtonModule,
+    LayoutModule
   ],
   providers: [
-    SidebarComponent,
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA
   ],
   entryComponents: [
     // tenants
