@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ContentTemplateModule} from './content-template/content-template.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
@@ -26,7 +27,18 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     CommonModule,
     ContentTemplateModule,
     PerfectScrollbarModule,
+    SharedModule,
 
+  ],
+  exports:[
+    HeaderComponent,
+    HeaderLeftNavbarComponent,
+    HeaderLogoComponent,
+    HeaderUserMenuComponent,
+    FooterComponent,
+    SidebarComponent,
+    ContentTemplateModule,
+    PerfectScrollbarModule,
   ],
   schemas: [
     NO_ERRORS_SCHEMA

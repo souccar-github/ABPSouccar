@@ -3,7 +3,7 @@
     <app-heading  [title]= "title"></app-heading>
     <div class="top-right-button-container text-zero">
       <button type="button" (click)="onAddNewItem()"
-        class="top-right-button btn btn-primary btn-lg mr-1">{{ 'pages.add-new' | localize}}</button>
+        class="top-right-button btn btn-primary btn-lg mr-1">{{ 'Create' | localize}}</button>
       <div class="btn-group" dropdown>
         <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
           <label class="custom-control custom-checkbox mb-0 d-inline-block">
@@ -28,7 +28,7 @@
       <a class="btn pt-0 pl-0 d-inline-block d-md-none c-pointer" data-toggle="collapse"
         (click)="displayOptionsCollapsed = !displayOptionsCollapsed" role="button" aria-expanded="true"
         aria-controls="displayOptions">
-        {{ 'pages.display-options' | localize}} {{' '}}
+        {{ 'pages.display-options' | localize}}
         <i class="simple-icon-arrow-down align-middle"></i>
       </a>
       <div id="displayOptions" [collapse]="displayOptionsCollapsed" class="collapse dont-collapse-sm">

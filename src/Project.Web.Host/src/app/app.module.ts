@@ -31,6 +31,7 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
 // layout
 import {ComponentsStateButtonModule} from './widgets/state-button/components.state-button.module';
 import {LayoutModule} from './layout/layout.module';
+import { ContentTemplateModule } from './layout/content-template/content-template.module';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import {LayoutModule} from './layout/layout.module';
     SharedModule,
     NgxPaginationModule,
     ComponentsStateButtonModule,
-    LayoutModule
+    LayoutModule,
   ],
   providers: [
   ],

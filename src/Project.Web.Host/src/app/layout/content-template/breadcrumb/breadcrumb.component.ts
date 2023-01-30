@@ -18,7 +18,7 @@ export class BreadcrumbComponent extends AppComponentBase {
   path = '';
   pathArr: string[] = [];
 
-  constructor(private injector:Injector,private router: Router, private activatedRoute: ActivatedRoute,private sidebarCom : SidebarComponent) {
+  constructor(injector:Injector,private router: Router, private activatedRoute: ActivatedRoute,private sidebarCom : SidebarComponent) {
     super(injector);
     this.menuItems = sidebarCom.getMenuItems();
     this.router.events

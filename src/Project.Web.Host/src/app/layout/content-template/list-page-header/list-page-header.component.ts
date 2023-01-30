@@ -14,16 +14,13 @@ export class ListPageHeaderComponent extends AppComponentBase{
   @Input() showOrderBy = true;
   @Input() showSearch = true;
   @Input() showItemsPerPage = true;
-  @Input() showDisplayMode = true;
+  @Input() showDisplayMode = false;
   @Input() displayMode = 'list';
   @Input() selectAllState = '';
   @Input() itemsPerPage = 10;
   @Input() itemOptionsPerPage = [5, 10, 20];
-  @Input() itemOrder = { label: 'Product Name', value: 'title' };
-  @Input()  itemOptionsOrders = [
-    { label: 'Product Name', value: 'title' },
-    { label: 'Category', value: 'category' },
-    { label: 'Status', value: 'status' }];
+  @Input() itemOrder ;
+  @Input()  itemOptionsOrders = [];
 
   @Output() changeDisplayMode: EventEmitter<string> = new EventEmitter<string>();
   @Output() addNewItem: EventEmitter<any> = new EventEmitter();

@@ -22,6 +22,7 @@ using Project.Roles.Dto;
 using Project.Users.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Project.Users
 {
@@ -51,6 +52,16 @@ namespace Project.Users
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
+        }
+        public override async Task<PagedResultDto<UserDto>> GetAllAsync(PagedUserResultRequestDto input)
+        {
+            var list = await base.GetAllAsync(input);
+            var parameter = Expression.Parameter(typeof(UserDto), "x");
+            var member = Expression.Property(parameter, input.OrderBy);
+            var finalExpression = Expression.Lambda<Func<UserDto, object>>(member, parameter);
+            var queryableList = list.Items.AsQueryable();
+            list.Items = queryableList.OrderBy(finalExpression).ToList();
+            return list;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
