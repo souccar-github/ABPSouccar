@@ -1,9 +1,10 @@
-<div class="wrapper">
+<div id="app-container" [className]="sidebar.containerClassnames">
   <app-header></app-header>
   <sidebar></sidebar>
-  <div class="content-wrapper">
-    <router-outlet></router-outlet>
-  </div>
+  <main>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
   <app-footer></app-footer>
-  <div id="sidebar-overlay" (click)="toggleSidebar()"></div>
 </div>

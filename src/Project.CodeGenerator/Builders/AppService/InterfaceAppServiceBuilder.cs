@@ -32,7 +32,7 @@ namespace Project.CodeGenerator
             builder.AppendLine($"namespace {namespac}.Services");
             builder.AppendLine("{");
 
-            builder.AppendLine($"    public interface I{entityName}AppService : ISouccarAppService<{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto>");
+            builder.AppendLine($"    public interface I{entityName}AppService : ISouccarAppService<{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto,Read{entityName}Dto>");
             builder.AppendLine( "    {");
 
             builder.AppendLine("    }");

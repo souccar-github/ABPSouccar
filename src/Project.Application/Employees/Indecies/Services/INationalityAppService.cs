@@ -8,7 +8,7 @@ using Souccar.Services;
 
 namespace Project.Employees.Indecies.Services
 {
-    public interface INationalityAppService : ISouccarAppService<NationalityDto,CreateNationalityDto,UpdateNationalityDto>
+    public interface INationalityAppService : ISouccarAppService<NationalityDto,CreateNationalityDto,UpdateNationalityDto,ReadNationalityDto>
     {
     }
 }

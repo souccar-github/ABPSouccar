@@ -33,7 +33,7 @@ namespace Project.CodeGenerator
             builder.AppendLine($"namespace {namespac}.Services");
             builder.AppendLine("{");
 
-            builder.AppendLine($"    public class {entityName}AppService : {GeneralSetting.AppServiceBase}<{entityName},{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto>, I{entityName}AppService");
+            builder.AppendLine($"    public class {entityName}AppService : {GeneralSetting.AppServiceBase}<{entityName},{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto,Read{entityName}Dto>, I{entityName}AppService");
             builder.AppendLine("    {");
 
             builder.AppendLine($"        private readonly I{entityName}DomainService _{paramName}DomainService;");

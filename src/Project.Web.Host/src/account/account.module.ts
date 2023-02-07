@@ -17,6 +17,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 // tenants
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
+import { WidgetsModule } from '@app/widgets/widgets.module';
 
 @NgModule({
     imports: [
@@ -27,8 +28,9 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         SharedModule,
         ServiceProxyModule,
         AccountRoutingModule,
-        ModalModule.forChild()
-    ],
+        ModalModule.forChild(),
+        WidgetsModule,
+        ],
     declarations: [
         AccountComponent,
         LoginComponent,

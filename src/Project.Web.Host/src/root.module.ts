@@ -15,9 +15,12 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { RootRoutingModule } from './root-routing.module';
 import { AppConsts } from '@shared/AppConsts';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
+import { TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 export function getCurrentLanguage(): string {
   if (abp.localization.currentLanguage.name) {
@@ -40,6 +43,12 @@ export function getCurrentLanguage(): string {
     TabsModule.forRoot(),
     ServiceProxyModule,
     RootRoutingModule,
+    
+    PerfectScrollbarModule,
+    TranslateModule,
+    CollapseModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   declarations: [RootComponent],
   providers: [

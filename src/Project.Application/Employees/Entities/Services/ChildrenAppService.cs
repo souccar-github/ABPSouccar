@@ -7,7 +7,7 @@ using Souccar.Services;
 
 namespace Project.Employees.Entities.Services
 {
-    public class ChildrenAppService : SouccarAppService<Children,ChildrenDto,CreateChildrenDto,UpdateChildrenDto>, IChildrenAppService
+    public class ChildrenAppService : SouccarAppService<Children,ChildrenDto,CreateChildrenDto,UpdateChildrenDto,ReadChildrenDto>, IChildrenAppService
     {
         private readonly IChildrenDomainService _childrenDomainService;
         public ChildrenAppService(IChildrenDomainService childrenDomainService) : base(childrenDomainService)

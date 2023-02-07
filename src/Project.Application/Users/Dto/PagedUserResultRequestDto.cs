@@ -7,6 +7,7 @@ namespace Project.Users.Dto
     public class PagedUserResultRequestDto : PagedResultRequestDto
     {
         public string Keyword { get; set; }
+        public string OrderBy { get; set; }
         public bool? IsActive { get; set; }
     }
 }

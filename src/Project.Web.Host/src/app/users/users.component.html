@@ -1,4 +1,48 @@
-<div [@routerTransition]>
+<app-list-page-header [title]="title" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
+    [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage"
+    [selectAllState]="selectAllState" (changeDisplayMode)="changeDisplayMode($event)" (addNewItem)="showAddNewModal()"
+    (selectAllChange)="selectAllChange($event)" (itemsPerPageChange)="itemsPerPageChange($event)"
+    (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
+</app-list-page-header>
+<context-menu #basicMenu>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('copy',$event.item)">
+        <i class="simple-icon-docs mr-1"></i> <span>{{"Copy" | localize}}</span>
+    </ng-template>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('move-to-archive',$event.item)">
+        <i class="simple-icon-drawer mr-1"></i> <span>{{"MoveToArchive" | localize}}</span>
+    </ng-template>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('delete',$event.item)">
+        <i class="simple-icon-trash mr-1"></i><span>{{"Delete" | localize}}</span>
+    </ng-template>
+</context-menu>
+<div class="row">
+    <div class="col-12 list" *ngIf="displayMode==='list'">
+        <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(item)}"
+            *ngFor="let item of data; let i=index" [contextMenu]="basicMenu" [contextMenuSubject]="item">
+            <div class="d-flex flex-grow-1 min-width-zero">
+                <div
+                    class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                    <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="javascript:;">
+                        {{item.fullName}}
+                    </a>
+                    <p class="mb-0 text-muted text-small w-15 w-xs-100">{{item.userName}}</p>
+                    <p class="mb-0 text-muted text-small w-15 w-xs-100">{{item.emailAddress}}</p>
+                </div>
+                <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+                    <input disabled type="checkbox" class="custom-control-input" [id]="'customCheck'+i"
+                        [checked]="item.isActive">
+                    <label class="custom-control-label" [for]="'customCheck'+i">{{"IsActive" | localize}}</label>
+                </label>
+                <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+                    <input type="checkbox" class="custom-control-input" [id]="'customCheck'+i"
+                        [checked]="isSelected(item)" (change)="onSelect(item)">
+                    <label class="custom-control-label" [for]="'customCheck'+i"></label>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- <div [@routerTransition]>
     <section class="content-header">
         <div class="container-fluid">
             <div class="row">
@@ -37,7 +81,7 @@
                                         name="keyword"
                                         [placeholder]="'SearchWithThreeDot' | localize"
                                         [(ngModel)]="keyword"
-                                        (keyup.enter)="getDataPage(1)"
+                                        (keyuitem.enter)="getDataPage(1)"
                                 />
                                 <div class="input-group-append">
                                     <button
@@ -231,4 +275,4 @@
             </div>
         </div>
     </section>
-</div>
+</div> -->

@@ -1483,6 +1483,12 @@ namespace Project.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsBordersRounded")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDarkMode")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1545,6 +1551,9 @@ namespace Project.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThemeColor")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -1729,7 +1738,7 @@ namespace Project.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")

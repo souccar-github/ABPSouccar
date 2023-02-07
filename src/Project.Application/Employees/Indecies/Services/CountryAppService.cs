@@ -7,7 +7,7 @@ using Souccar.Services;
 
 namespace Project.Employees.Indecies.Services
 {
-    public class CountryAppService : SouccarAppService<Country,CountryDto,CreateCountryDto,UpdateCountryDto>, ICountryAppService
+    public class CountryAppService : SouccarAppService<Country,CountryDto,CreateCountryDto,UpdateCountryDto,ReadCountryDto>, ICountryAppService
     {
         private readonly ICountryDomainService _countryDomainService;
         public CountryAppService(ICountryDomainService countryDomainService) : base(countryDomainService)

@@ -1,0 +1,72 @@
+<div class="container">
+  <div cdkDropListGroup>
+    <div class="two-list-container">
+      <h2>{{"Avaliable"|localize}}</h2>
+      <div class="Items">
+        <div cdkDropList [cdkDropListData]="avaliableList" class="two-list-list rounded"
+          (cdkDropListDropped)="drop($event)">
+          <perfect-scrollbar>
+            <div class="two-list-box custom-control" *ngFor="let item of avaliableList" id="{{item.name}}AV"
+              (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewAvaliable(item)"
+              (cdkDragEnded)="DragEnded()" cdkDrag>{{item.name}}
+              <div class="itemCheck mb-0 custom-checkbox custom-control">
+                <input type="checkbox" class="custom-control-input" id="customCheck0" [checked]="isSelected(item)">
+                <label class="custom-control-label" for="customCheck0">
+                </label>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+    </div>
+    <div class="two-list-container" style="width: 80px;">
+      <br>
+      <br>
+      <div class="Items-no-Scroll">
+        <div class="two-list-list rounded ">
+          <div class="btn btn-primary btn-sm btn-margin-all" (click)="MoveSelectedBackward()"><span
+              class="iconsminds-arrow-left"></span></div>
+          <div class="btn btn-primary btn-sm btn-margin-all" (click)="MoveAllBackward()"><span
+              class="iconsminds-arrow-left-2"></span>
+          </div>
+          <div class="btn btn-primary btn-sm btn-margin-all" (click)="MoveAllForward()"><span
+              class="iconsminds-arrow-right-2"></span>
+          </div>
+          <div class="btn btn-primary btn-sm btn-margin-all" (click)="MoveSelectedForward()"><span
+              class="iconsminds-arrow-right"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="two-list-container">
+      <h2>{{ "Selected" | localize}}</h2>
+      <div class="Items">
+        <div cdkDropList [cdkDropListData]="selectedList" class="two-list-list rounded"
+          (cdkDropListDropped)="drop($event)">
+          <perfect-scrollbar>
+            <div class="two-list-box custom-control row" *ngFor="let item of selectedList" id="{{item.name}}SEL"
+              (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewSelected(item)"
+              (cdkDragEnded)="DragEnded()" cdkDrag>
+              <div class="two-list-box custom-control col-6">{{item.name}}</div>
+              <div class=" col-6">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-3 simple-icon-plus " id="{{item.name}}INS"></div>
+                    <div class="col-3 simple-icon-pencil " id="{{item.name}}EDI"></div>
+                    <div class="col-3 simple-icon-trash " id="{{item.name}}DEL"></div>
+                    <div class="itemCheck mb-0 custom-checkbox custom-control col-3">
+                      <input type="checkbox" class="custom-control-input" id="customCheck0"
+                        [checked]="isSelected(item)">
+                      <label class="custom-control-label" for="customCheck0">
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

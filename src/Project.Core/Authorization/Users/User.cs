@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Project.Authorization.Users.Helper;
 
 namespace Project.Authorization.Users
 {
@@ -10,6 +12,12 @@ namespace Project.Authorization.Users
         public const string DefaultPassword = "123qwe";
 
         public string NameForDropdown { get { return this.FullName; } }
+
+        public bool IsDarkMode { get; set; }
+
+        public bool IsBordersRounded { get; set; }
+
+        public Colors ThemeColor { get; set; }
 
         public static string CreateRandomPassword()
         {

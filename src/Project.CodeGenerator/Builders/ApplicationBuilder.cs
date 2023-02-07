@@ -26,7 +26,7 @@ namespace Project.CodeGenerator
                 Directory.CreateDirectory(dtoPath);
 
             GenerateDtoFile(entityType, dtoPath);
-            GenerateDtoFile(entityType, dtoPath, "Read", true);
+            GenerateDtoFile(entityType, dtoPath, "Read");
             GenerateDtoFile(entityType, dtoPath, "Update");
             GenerateDtoFile(entityType, dtoPath, "Create");
             GenerateAppService(folderPath, entityType);
@@ -98,7 +98,7 @@ namespace Project.CodeGenerator
             }
         }
 
-        private static void GenerateDtoFile(Type entityType, string dtoPath, string prefix = "", bool isLowerCase = false)
+        private static void GenerateDtoFile(Type entityType, string dtoPath, string prefix = "")
         {
 
             var fileName = $"{prefix}{entityType.Name}Dto.cs";
@@ -106,7 +106,7 @@ namespace Project.CodeGenerator
 
             if (!File.Exists(path))
             {
-                var dtoBuilder = new DtoBuilder(entityType, prefix, isLowerCase);
+                var dtoBuilder = new DtoBuilder(entityType, prefix);
                 var text = dtoBuilder.Genetate();
 
                 CreateCsFile(text, path);

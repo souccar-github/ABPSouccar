@@ -146,5 +146,6 @@
     <text name="CreateNewCountry">Create New Country</text>
     <text name="EditCountry">Edit Country</text>
     <text name="DeleteCountry">Delete Country</text>
+    <text name="DateOfBirth">Date Of Birth</text>
   </texts>
 </localizationDictionary>

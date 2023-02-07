@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Abp.Application.Services.Dto;
-using Project.Employees.Entities;
-using Project.Employees.Entities.Dto;
-using Project.Employees.Indecies;
+using System.Collections.Generic;
 using Project.Employees.Indecies.Dto;
+using Project.Employees.Entities.Dto;
+using Project.Employees.Enums;
 
 namespace Project.Employees.RootEntities.Dto
 {
@@ -12,10 +11,10 @@ namespace Project.Employees.RootEntities.Dto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Gender { get; set; }
         public NationalityDto Nationality { get; set; }
         public List<CountryDto> Countries { get; set; }
         public List<ChildrenDto> Children { get; set; }
+        public Gender Gender { get; set; }
     }
 }
 

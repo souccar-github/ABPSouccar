@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
-import { HomeComponent } from '@app/home/home.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AboutComponent } from '@app/about/about.component';
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
@@ -29,20 +29,21 @@ import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.c
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 // layout
-import { HeaderComponent } from './layout/header.component';
-import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
-import { HeaderLanguageMenuComponent } from './layout/header-language-menu.component';
-import { HeaderUserMenuComponent } from './layout/header-user-menu.component';
-import { FooterComponent } from './layout/footer.component';
-import { SidebarComponent } from './layout/sidebar.component';
-import { SidebarLogoComponent } from './layout/sidebar-logo.component';
-import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
-import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import {WidgetsModule} from './widgets/widgets.module';
+import {LayoutModule} from './layout/layout.module';
+import { ContentTemplateModule } from './layout/content-template/content-template.module';
+import {TwoListDragAndDropComponent} from './widgets/two-lists-drag-and-drop/two_list_drag_and_drop.component'
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { StateButtonComponent } from './widgets/state-button/state-button.component';
+
+
+import { TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     AboutComponent,
     // tenants
     TenantsComponent,
@@ -58,16 +59,6 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
-    // layout
-    HeaderComponent,
-    HeaderLeftNavbarComponent,
-    HeaderLanguageMenuComponent,
-    HeaderUserMenuComponent,
-    FooterComponent,
-    SidebarComponent,
-    SidebarLogoComponent,
-    SidebarUserPanelComponent,
-    SidebarMenuComponent
   ],
   imports: [
     CommonModule,
@@ -78,13 +69,24 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     ModalModule.forChild(),
     BsDropdownModule,
     CollapseModule,
+    PerfectScrollbarModule,
     TabsModule,
     AppRoutingModule,
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    WidgetsModule,
+    LayoutModule,
+    TranslateModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    DragDropModule
   ],
-  providers: [],
+  providers: [
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA
+  ],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,
