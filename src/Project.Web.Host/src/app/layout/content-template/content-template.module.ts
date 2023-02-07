@@ -5,7 +5,11 @@ import { HeadingComponent } from './heading/heading.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ApplicationMenuComponent } from './application-menu/application-menu.component';
 import { SharedModule } from '@shared/shared.module';
-
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { TranslateModule } from '@ngx-translate/core';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,11 @@ import { SharedModule } from '@shared/shared.module';
   ],
   imports: [
     CommonModule,
+    PerfectScrollbarModule,
+    TranslateModule,
+    CollapseModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
     SharedModule
   ],
   exports:[

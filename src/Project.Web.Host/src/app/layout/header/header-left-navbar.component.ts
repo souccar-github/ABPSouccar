@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, Injector, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Injector, HostListener, Renderer2, AfterViewInit } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
 import { ISidebar, SidebarService } from '@shared/service-proxies/sidebar.service';
 import { Subscription } from 'rxjs';

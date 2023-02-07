@@ -8,9 +8,8 @@
                         (click)="openSubMenu($event,item); false" [href]="item.route">
                         <i [ngClass]="item.icon"></i> {{item.label | localize}}</a>
                     <a *ngIf="isMenuItemVisible(item)&&(!item.children || (item.children &&  item.children.length===0))"
-                        (click)="changeSelectedParentHasNoSubmenu(item.route); false" [routerLink]="item.route">
+                        (click)="changeSelectedParentHasNoSubmenu(item.route); false" [href]="item.route">
                         <i [ngClass]="item.icon"></i> {{item.label | localize}}</a>
-
                 </li>
             </ul>
         </perfect-scrollbar>
@@ -21,31 +20,34 @@
                 [ngClass]="{'d-block': (selectedParentMenu === item.route && viewingParentMenu==='') || viewingParentMenu === item.route}">
                 <li *ngFor="let sub of item.children"
                     [ngClass]="{'active': currentUrl === sub.route ,'has-sub-item' : sub.children&& sub.children.length>0 }">
-                    <a *ngIf="isMenuItemVisible(item)&&sub.newWindow" [href]="sub.route" rel="noopener noreferrer" target="_blank">
+                    <a *ngIf="isMenuItemVisible(item)&&sub.newWindow" [href]="sub.route" rel="noopener noreferrer"
+                        target="_blank">
                         <i [ngClass]="sub.icon"></i>
                         <span class="d-inline-block">{{sub.label | localize}}</span>
                     </a>
-                    <a *ngIf="isMenuItemVisible(item)&&!sub.newWindow && (!sub.children || sub.children.length<=0)" [routerLink]="[sub.route]"
-                        routerLinkActive="active">
+                    <a *ngIf="isMenuItemVisible(item)&&!sub.newWindow && (!sub.children || sub.children.length<=0)"
+                        [href]="[sub.route]" routerLinkActive="active">
                         <i [ngClass]="sub.icon"></i>
                         <span class="d-inline-block">{{sub.label | localize}}</span>
                     </a>
-                    <a (click)="toggleCollapse(sub.route)" *ngIf="isMenuItemVisible(item)&&sub.children && sub.children.length > 0"
-                      [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': closedCollapseList.includes(sub.route)}">
+                    <a (click)="toggleCollapse(sub.route)"
+                        *ngIf="isMenuItemVisible(item)&&sub.children && sub.children.length > 0"
+                        [ngClass]="{'rotate-arrow-icon opacity-50 c-pointer': true, 'collapsed': closedCollapseList.includes(sub.route)}">
                         <i class="simple-icon-arrow-down"></i>
                         <span class="d-inline-block">{{sub.label | localize}}</span>
                     </a>
-                    <div [collapse]="closedCollapseList.includes(sub.route)"  [isAnimated]="true">
+                    <div [collapse]="closedCollapseList.includes(sub.route)" [isAnimated]="true">
                         <div *ngIf="sub.children && sub.children.length > 0">
                             <ul class="list-unstyled inner-level-menu">
-                                <li *ngFor="let deepSub of sub.children" [ngClass]="{'active': currentUrl === deepSub.route}">
-                                    <a *ngIf="isMenuItemVisible(item)&&deepSub.newWindow" [href]="deepSub.route" rel="noopener noreferrer"
-                                        target="_blank">
+                                <li *ngFor="let deepSub of sub.children"
+                                    [ngClass]="{'active': currentUrl === deepSub.route}">
+                                    <a *ngIf="isMenuItemVisible(item)&&deepSub.newWindow" [href]="deepSub.route"
+                                        rel="noopener noreferrer" target="_blank">
                                         <i [ngClass]="deepSub.icon"></i>
                                         <span class="d-inline-block">{{deepSub.label | localize}}</span>
                                     </a>
                                     <a *ngIf="isMenuItemVisible(item)&&!deepSub.newWindow && (!deepSub.children || deepSub.children.length<=0)"
-                                        [routerLink]="[deepSub.route]" routerLinkActive="active">
+                                        [href]="[deepSub.route]" routerLinkActive="active">
                                         <i [ngClass]="deepSub.icon"></i>
                                         <span class="d-inline-block">{{deepSub.label | localize}}</span>
                                     </a>

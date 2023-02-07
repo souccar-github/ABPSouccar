@@ -7,8 +7,13 @@ import { HeaderUserMenuComponent } from './header/header-user-menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ContentTemplateModule} from './content-template/content-template.module';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedModule } from '@shared/shared.module';
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { TranslateModule } from '@ngx-translate/core';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 @NgModule({
@@ -26,9 +31,12 @@ import { SharedModule } from '@shared/shared.module';
   imports: [
     CommonModule,
     ContentTemplateModule,
-    PerfectScrollbarModule,
     SharedModule,
-
+    PerfectScrollbarModule,
+    TranslateModule,
+    CollapseModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   exports:[
     HeaderComponent,

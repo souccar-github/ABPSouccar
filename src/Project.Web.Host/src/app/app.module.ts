@@ -33,6 +33,9 @@ import {ComponentsStateButtonModule} from './widgets/state-button/components.sta
 import {LayoutModule} from './layout/layout.module';
 import { ContentTemplateModule } from './layout/content-template/content-template.module';
 
+import { TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -70,6 +73,9 @@ import { ContentTemplateModule } from './layout/content-template/content-templat
     NgxPaginationModule,
     ComponentsStateButtonModule,
     LayoutModule,
+    TranslateModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   providers: [
   ],

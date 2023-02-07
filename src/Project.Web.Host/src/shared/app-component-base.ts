@@ -1,4 +1,4 @@
-import { Injector, ElementRef } from '@angular/core';
+import { Injector, ElementRef, Renderer2 } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import {
     LocalizationService,
@@ -37,6 +37,8 @@ export abstract class AppComponentBase {
         this.appSession = injector.get(AppSessionService);
         this.elementRef = injector.get(ElementRef);
     }
+    
+    
 
     l(key: string, ...args: any[]): string {
         let localizedText = this.localization.localize(key, this.localizationSourceName);

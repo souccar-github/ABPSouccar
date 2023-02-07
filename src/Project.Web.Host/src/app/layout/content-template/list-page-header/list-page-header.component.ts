@@ -1,4 +1,4 @@
-import { Component,  ViewChild, EventEmitter, Output, Input, Injector } from '@angular/core';
+import { Component,  ViewChild, EventEmitter, Output, Input, Injector, Renderer2, OnInit, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import {HeadingComponent} from '../heading/heading.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
@@ -7,7 +7,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
   selector: 'app-list-page-header',
   templateUrl: './list-page-header.component.html'
 })
-export class ListPageHeaderComponent extends AppComponentBase{
+export class ListPageHeaderComponent extends AppComponentBase {
   displayOptionsCollapsed = false;
 
   @Input() title = "Unknown";

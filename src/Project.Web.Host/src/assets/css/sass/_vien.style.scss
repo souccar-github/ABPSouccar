@@ -763,7 +763,7 @@ button {
 }
 
 .btn-primary,
-a.btn-primary:not([href]):not([tabindex]) {
+a.btn-primary:not([routerLink]):not([tabindex]) {
   background-color: $theme-color-1;
   border-color: $theme-color-1;
   color: $button-text-color;
@@ -850,7 +850,7 @@ a.btn-primary:not([href]):not([tabindex]) {
 }
 
 .btn-secondary,
-a.btn-secondary:not([href]):not([tabindex]) {
+a.btn-secondary:not([routerLink]):not([tabindex]) {
   background-color: $theme-color-2;
   border-color: $theme-color-2;
   color: $button-text-color;
