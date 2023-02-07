@@ -7,6 +7,7 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { TwoListDragAndDropComponent } from './widgets/two-lists-drag-and-drop/two_list_drag_and_drop.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { ChangePasswordComponent } from './users/change-password/change-password
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
-                    { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
+                    { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
+                    { path: 'two-lists', component: TwoListDragAndDropComponent }
                 ]
             }
         ])

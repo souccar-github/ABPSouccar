@@ -3,6 +3,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata":true,
     "lib": [ "es6", "dom" ],
     "mapRoot": "./",
     "module": "es2020",

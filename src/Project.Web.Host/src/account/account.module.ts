@@ -17,7 +17,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 // tenants
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
-import { ComponentsStateButtonModule } from '@app/widgets/state-button/components.state-button.module';
+import { WidgetsModule } from '@app/widgets/widgets.module';
 
 @NgModule({
     imports: [
@@ -29,8 +29,8 @@ import { ComponentsStateButtonModule } from '@app/widgets/state-button/component
         ServiceProxyModule,
         AccountRoutingModule,
         ModalModule.forChild(),
-        ComponentsStateButtonModule
-    ],
+        WidgetsModule,
+        ],
     declarations: [
         AccountComponent,
         LoginComponent,

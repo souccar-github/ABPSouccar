@@ -1,0 +1,71 @@
+<div class="container">
+
+<div cdkDropListGroup>
+  <div class="example-container">
+    <h2>Avaliable</h2>
+    <div class="left-Items">
+    <div
+      cdkDropList
+      [cdkDropListData]="avaliableList"
+      class="example-list rounded"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box"  *ngFor="let item of avaliableList" id="{{item.name}}AV" (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewAvaliable(item)" (cdkDragEnded)="DragEnded()"   cdkDrag>{{item.name}}
+        <input type="checkbox"  [checked]="isSelected(item)"></div>
+    </div>
+    </div>
+  </div>
+
+  <div  class="example-container" style="width: 80px;">
+    <br>
+    <br>
+<div class="left-Items-no-Scroll">
+    <div class="example-list rounded ">
+   <div class="example-btn" (click)="MoveSelectedBackward()"><span class="glyph-icon iconsminds-arrow-left"></span></div>
+
+   <div class="example-btn" (click)="MoveAllBackward()"><span class="glyph-icon iconsminds-arrow-left-2"></span></div>
+
+   <div class="example-btn" (click)="MoveAllForward()"><span class="glyph-icon iconsminds-arrow-right-2"></span></div>
+
+   <div class="example-btn" (click)="MoveSelectedForward()"><span class="glyph-icon iconsminds-arrow-right"></span></div>
+
+  </div>
+  </div>
+  </div>
+
+
+  <div  class="example-container">
+    <h2>Selected</h2>
+    <div class="left-Items">
+      <div
+      cdkDropList 
+      [cdkDropListData]="selectedList"
+      class="example-list rounded"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of selectedList" id="{{item.name}}SEL" (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewSelected(item)"  (cdkDragEnded)="DragEnded()"  cdkDrag >
+
+        {{item.name}}
+       
+        
+        
+      <div class="row">
+        <div class="col-12">
+        <div class="row">
+          <div class="col-3 simple-icon-plus " id="{{item.name}}INS"></div>
+          <div class="col-3 simple-icon-pencil " id="{{item.name}}EDI"></div>
+          <div class="col-3 simple-icon-trash " id="{{item.name}}DEL"></div>
+          <div class="col-3  " id="{{item.name}}TEST"><input type="checkbox"  [checked]="isSelected(item)"></div>
+        </div>
+      </div>
+      </div>
+    
+      </div>
+
+    </div>
+    </div>
+    
+  </div>
+
+</div>
+</div>
+
+

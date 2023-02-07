@@ -29,9 +29,13 @@ import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.c
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 // layout
-import {ComponentsStateButtonModule} from './widgets/state-button/components.state-button.module';
+import {WidgetsModule} from './widgets/widgets.module';
 import {LayoutModule} from './layout/layout.module';
 import { ContentTemplateModule } from './layout/content-template/content-template.module';
+import {TwoListDragAndDropComponent} from './widgets/two-lists-drag-and-drop/two_list_drag_and_drop.component'
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { StateButtonComponent } from './widgets/state-button/state-button.component';
+
 
 
 @NgModule({
@@ -68,8 +72,9 @@ import { ContentTemplateModule } from './layout/content-template/content-templat
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
-    ComponentsStateButtonModule,
+    WidgetsModule,
     LayoutModule,
+    DragDropModule
   ],
   providers: [
   ],
