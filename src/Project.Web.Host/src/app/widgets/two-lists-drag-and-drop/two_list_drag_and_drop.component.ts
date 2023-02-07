@@ -1,17 +1,18 @@
-import { Component,  EventEmitter,  Input, Output, Renderer2 } from '@angular/core';
+import { Component,  EventEmitter,  Injector,  Input, Output, Renderer2 } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem
 } from "@angular/cdk/drag-drop";
 import { forEach } from 'lodash-es';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-two-list-drag-and-drop',
   templateUrl: './two_list_drag_and_drop.component.html',
   styleUrls:['./two_list_drag_and_drop.component.css'],
 })
-export class TwoListDragAndDropComponent  {
+export class TwoListDragAndDropComponent extends AppComponentBase {
   
   @Input() avaliableList = {} as Array<any>; 
   @Input() selectedList = {} as Array<any>;
@@ -19,11 +20,11 @@ export class TwoListDragAndDropComponent  {
 
 
 
-  constructor(private renderer:Renderer2) { 
-
+  constructor(injector: Injector,private renderer:Renderer2) { 
+    super(injector);
     //Test
-    // this.avaliableList = ['T1', 'T2', 'T3', 'T4','T5', 'T6', 'T7', 'T8'];
-    this.avaliableList = [{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
+    // this.avaliableList = ['T1', 'T2', 'T3', 'T4','T5', 'T6', 'T7', 'T8']; 
+    this.avaliableList = [{id:1,name:'Adminff ffffff fffffff fffffff ffff'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
    this.selectedList = [];
 
   }
