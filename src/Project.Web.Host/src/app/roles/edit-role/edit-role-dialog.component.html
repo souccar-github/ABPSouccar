@@ -8,7 +8,7 @@
     [title]="'EditRole' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
-  <div class="modal-body">
+  <div class="modal-body" >
     <tabset>
       <tab [heading]="'Details' | localize" class="pt-3 px-2">
         <div class="form-group row required">
@@ -93,6 +93,9 @@
             </div>
           </ng-container>
         </div>
+
+        <app-two-list-drag-and-drop [avaliableList]="permissions" ></app-two-list-drag-and-drop>
+
       </tab>
     </tabset>
   </div>
