@@ -7,6 +7,14 @@ import {
 import { forEach } from 'lodash-es';
 import { AppComponentBase } from '@shared/app-component-base';
 
+
+export class ItemWithPermission{
+  item : any;
+  insertable : boolean;
+  editable : boolean;
+  deleteable : boolean;
+}
+
 @Component({
   selector: 'app-two-list-drag-and-drop',
   templateUrl: './two_list_drag_and_drop.component.html',
@@ -22,21 +30,53 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
 
   constructor(injector: Injector,private renderer:Renderer2) { 
     super(injector);
-    //Test
-    // this.avaliableList = ['T1', 'T2', 'T3', 'T4','T5', 'T6', 'T7', 'T8']; 
-    this.avaliableList = [{id:1,name:'Adminff ffffff fffffff fffffff ffff'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
-   this.selectedList = [];
+   
+   // this.avaliableList = [{id:1,name:'Adminff ffffff fffffff fffffff ffff'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
+    this.avaliableList = [];
+    this.selectedList = [];
 
   }
 
 
+  Permissions = [];
 
-  @Output() getSelectedList = new EventEmitter();
+
+
+  @Output() getPermissions = new EventEmitter();
 
   getList()
   {
-    this.getSelectedList.emit(this.selectedList);
+    this.getPermissions.emit(this.Permissions);
   }
+
+  Save()
+  {
+    this.selectedList.forEach(element => {
+      let el = document.getElementById(element.id + 'INS');
+      if(el.classList.contains('is-insertable'))
+      {
+        // insert Permission Granted
+        alert(element.name + ' Insert Granted');
+      }
+      el = document.getElementById(element.id + "EDI")
+        if(el.classList.contains('is-editable'))
+        {
+          // edit Permission Granted
+          alert(element.name + ' Edit Granted');
+  
+        }
+        el = document.getElementById(element.id + "DEL")
+        {
+          if(el.classList.contains('is-deleteable'))
+          {
+            // delete Permission Granted
+            alert(element.name + ' Delete Granted');
+    
+          }
+        }
+    });
+  }
+
 
 
   MoveAllForward()
@@ -159,9 +199,8 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     }
     this.selectedItems.forEach(element => {
 
-        let el = document.getElementById(element.name + 'AV');
+        let el = document.getElementById(element.id + 'AV');
         this.renderer.addClass(el,'selected-and-dragged');
-      
     });
   }
 
@@ -173,7 +212,7 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     }
     this.selectedItems.forEach(element => {
 
-        let el = document.getElementById(element.name + 'SEL');
+        let el = document.getElementById(element.id + 'SEL');
         this.renderer.addClass(el,'selected-and-dragged');
       
     });
@@ -182,11 +221,11 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
   DragEnded(){
 
     this.avaliableList.forEach(element => {
-      let el = document.getElementById(element.name + 'AV');
+      let el = document.getElementById(element.id + 'AV');
       this.renderer.removeClass(el,'selected-and-dragged');
     });
     this.selectedList.forEach(element => {
-      let el = document.getElementById(element.name + 'SEL');
+      let el = document.getElementById(element.id + 'SEL');
       this.renderer.removeClass(el,'selected-and-dragged');
     });
   }
@@ -197,7 +236,10 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'INS');
+
+       
+
+       let el = document.getElementById(element.id + 'INS');
     //   this.renderer.addClass(el,'simple-icon-plus');
        this.renderer.addClass(el,'is-insertable');
       }
@@ -209,19 +251,36 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'INS');
+       let el = document.getElementById(element.id + 'INS');
    //    this.renderer.removeClass(el,'simple-icon-plus');
        this.renderer.removeClass(el,'is-insertable');
       }
     });
   }
 
+  setAllInsertable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'INS');
+       this.renderer.addClass(el,'is-insertable');
+    });
+  }
+
+  removeAllInsertable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'INS');
+       this.renderer.removeClass(el,'is-insertable');
+    });
+  }
+
+
   setEditable()
   {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'EDI');
+       let el = document.getElementById(element.id + 'EDI');
       // this.renderer.addClass(el,'simple-icon-pencil');
        this.renderer.addClass(el,'is-editable');
       }
@@ -233,10 +292,26 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'EDI');
+       let el = document.getElementById(element.id + 'EDI');
    //    this.renderer.removeClass(el,'simple-icon-pencil');
        this.renderer.removeClass(el,'is-editable');
       }
+    });
+  }
+
+  setAllEditable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'EDI');
+       this.renderer.addClass(el,'is-editable');
+    });
+  }
+
+  removeAllEditable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'EDI');
+       this.renderer.removeClass(el,'is-editable');
     });
   }
 
@@ -245,7 +320,7 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'DEL');
+       let el = document.getElementById(element.id + 'DEL');
     //   this.renderer.addClass(el,'simple-icon-trash');
        this.renderer.addClass(el,'is-deleteable');
       }
@@ -257,10 +332,26 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     this.selectedItems.forEach(element => {
       if(this.selectedList.includes(element))
       {
-       let el = document.getElementById(element.name + 'DEL');
+       let el = document.getElementById(element.id + 'DEL');
     //   this.renderer.removeClass(el,'simple-icon-trash');
        this.renderer.removeClass(el,'is-deleteable');
       }
+    });
+  }
+
+  setAllDeleteable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'DEL');
+       this.renderer.addClass(el,'is-deleteable');
+    });
+  }
+
+  removeAllDeleteable()
+  {
+    this.selectedList.forEach(element => {
+       let el = document.getElementById(element.id + 'DEL');
+       this.renderer.removeClass(el,'is-deleteable');
     });
   }
 

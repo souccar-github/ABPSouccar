@@ -6,7 +6,7 @@
         <div cdkDropList [cdkDropListData]="avaliableList" class="two-list-list rounded"
           (cdkDropListDropped)="drop($event)">
           <perfect-scrollbar>
-            <div class="two-list-box custom-control" *ngFor="let item of avaliableList" id="{{item.name}}AV"
+            <div class="two-list-box custom-control" *ngFor="let item of avaliableList" id="{{item.id}}AV"
               (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewAvaliable(item)"
               (cdkDragEnded)="DragEnded()" cdkDrag>{{item.name}}
               <div class="itemCheck mb-0 custom-checkbox custom-control">
@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="two-list-container" style="width: 80px;">
+    <div class="two-list-container-buttons">
       <br>
       <br>
       <div class="Items-no-Scroll">
@@ -43,16 +43,16 @@
         <div cdkDropList [cdkDropListData]="selectedList" class="two-list-list rounded"
           (cdkDropListDropped)="drop($event)">
           <perfect-scrollbar>
-            <div class="two-list-box custom-control row" *ngFor="let item of selectedList" id="{{item.name}}SEL"
+            <div class="two-list-box custom-control row" *ngFor="let item of selectedList" id="{{item.id}}SEL"
               (click)="selectedItem = item;setSelectedItem(item)" (cdkDragStarted)="DragPreviewSelected(item)"
               (cdkDragEnded)="DragEnded()" cdkDrag>
               <div class="two-list-box custom-control col-6">{{item.name}}</div>
               <div class=" col-6">
                 <div class="col-12">
                   <div class="row">
-                    <div class="col-3 simple-icon-plus " id="{{item.name}}INS"></div>
-                    <div class="col-3 simple-icon-pencil " id="{{item.name}}EDI"></div>
-                    <div class="col-3 simple-icon-trash " id="{{item.name}}DEL"></div>
+                    <div class="col-3 simple-icon-plus " id="{{item.id}}INS"></div>
+                    <div class="col-3 simple-icon-pencil " id="{{item.id}}EDI"></div>
+                    <div class="col-3 simple-icon-trash " id="{{item.id}}DEL"></div>
                     <div class="itemCheck mb-0 custom-checkbox custom-control col-3">
                       <input type="checkbox" class="custom-control-input" id="customCheck0"
                         [checked]="isSelected(item)">
@@ -68,5 +68,65 @@
         </div>
       </div>
     </div>
+
+
+
+  </div>
+
+
+
+
+</div>
+
+<div class="col-4">
+  <div class="two-list-container">
+    <br>
+    <br>
+    <div class="Items-no-Scroll">
+      <div class="two-list-list rounded ">
+        <div class="col-12">
+          <div class="row">
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="setInsertable()">{{"Insertable"
+              |localize}}</div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="setAllInsertable()">{{"All Insertable"
+              |localize}}</div>
+          </div>
+          <div class="row">
+
+            <div class="btn btn-primary btn-margin-all btn-sm col-5" (click)="setEditable()">{{"Editable" |localize}}
+            </div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5" (click)="setAllEditable()">{{"All Editable"
+              |localize}}</div>
+          </div>
+          <div class="row">
+
+            <div class="btn btn-primary btn-margin-all btn-sm col-5" (click)="setDeleteable()">{{"Deleteable"
+              |localize}}</div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5" (click)="setAllDeleteable()">{{"All Deleteable"
+              |localize}}</div>
+          </div>
+          <div class="row">
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeInsertable()">{{"Not Insertable"
+              |localize}}</div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeAllInsertable()">{{"All Not Insertable" |localize}}</div>
+          </div>
+          <div class="row">
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeEditable()">{{"Not Editable"
+              |localize}}</div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeAllEditable()">{{"All Not Editable"
+              |localize}}</div>
+          </div>
+          <div class="row">
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeDeleteable()">{{"Not Deleteable"
+              |localize}}</div>
+            <div class="btn btn-primary btn-margin-all btn-sm col-5 " (click)="removeAllDeleteable()">{{"All Not Deleteable" |localize}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
+
+
+<button (click)="Save()">Save</button>
