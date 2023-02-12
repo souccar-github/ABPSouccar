@@ -1,4 +1,4 @@
-import { Component,  EventEmitter,  Injector,  Input, Output, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, Renderer2 } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -8,30 +8,30 @@ import { forEach } from 'lodash-es';
 import { AppComponentBase } from '@shared/app-component-base';
 
 
-export class ItemWithPermission{
-  item : any;
-  insertable : boolean;
-  editable : boolean;
-  deleteable : boolean;
+export class ItemWithPermission {
+  item: any;
+  insertable: boolean;
+  editable: boolean;
+  deleteable: boolean;
 }
 
 @Component({
   selector: 'app-two-list-drag-and-drop',
   templateUrl: './two_list_drag_and_drop.component.html',
-  styleUrls:['./two_list_drag_and_drop.component.css'],
+  styleUrls: ['./two_list_drag_and_drop.component.css'],
 })
 export class TwoListDragAndDropComponent extends AppComponentBase {
-  
-  @Input() avaliableList = {} as Array<any>; 
+
+  @Input() avaliableList = {} as Array<any>;
   @Input() selectedList = {} as Array<any>;
   @Input() buttonNames = {} as Array<string>;
 
 
 
-  constructor(injector: Injector,private renderer:Renderer2) { 
+  constructor(injector: Injector, private renderer: Renderer2) {
     super(injector);
-   
-   // this.avaliableList = [{id:1,name:'Adminff ffffff fffffff fffffff ffff'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
+
+    // this.avaliableList = [{id:1,name:'Adminff ffffff fffffff fffffff ffff'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'},{id:1,name:'Admin'},{id:2,name:'User'},{id:3,name:'Customer'},{id:4,name:'CustomPermission'},{id:5,name:'Test'}];
     this.avaliableList = [];
     this.selectedList = [];
 
@@ -44,314 +44,280 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
 
   @Output() getPermissions = new EventEmitter();
 
-  getList()
-  {
+  getList() {
     this.getPermissions.emit(this.Permissions);
   }
 
-  Save()
-  {
+  Save() {
     this.selectedList.forEach(element => {
-      let el = document.getElementById(element.id + 'INS');
-      if(el.classList.contains('is-insertable'))
-      {
+      let el = document.getElementById(element.name + 'INS');
+      if (el.classList.contains('is-insertable')) {
         // insert Permission Granted
         alert(element.name + ' Insert Granted');
       }
-      el = document.getElementById(element.id + "EDI")
-        if(el.classList.contains('is-editable'))
-        {
-          // edit Permission Granted
-          alert(element.name + ' Edit Granted');
-  
+      el = document.getElementById(element.name + "EDI")
+      if (el.classList.contains('is-editable')) {
+        // edit Permission Granted
+        alert(element.name + ' Edit Granted');
+
+      }
+      el = document.getElementById(element.name + "DEL")
+      {
+        if (el.classList.contains('is-deleteable')) {
+          // delete Permission Granted
+          alert(element.name + ' Delete Granted');
+
         }
-        el = document.getElementById(element.id + "DEL")
-        {
-          if(el.classList.contains('is-deleteable'))
-          {
-            // delete Permission Granted
-            alert(element.name + ' Delete Granted');
-    
-          }
-        }
+      }
     });
   }
 
 
 
-  MoveAllForward()
-  {
+  MoveAllForward() {
     this.avaliableList.forEach(element => {
       this.selectedList.push(element);
     });
     this.avaliableList = [];
   }
 
-  MoveAllBackward()
-  {
+  MoveAllBackward() {
     this.selectedList.forEach(element => {
       this.avaliableList.push(element);
     });
     this.selectedList = [];
   }
 
-  MoveOneForward()
-  {
-    if(!this.selectedList.includes(this.selectedItem))
-    {
-    this.selectedList.push(this.selectedItem);
+  MoveOneForward() {
+    if (!this.selectedList.includes(this.selectedItem)) {
+      this.selectedList.push(this.selectedItem);
 
-    const index = this.avaliableList.indexOf(this.selectedItem, 0);
-    if (index > -1) {
-      this.avaliableList.splice(index, 1);
+      const index = this.avaliableList.indexOf(this.selectedItem, 0);
+      if (index > -1) {
+        this.avaliableList.splice(index, 1);
       }
     }
   }
 
-  MoveOneBackward()
-  {
-    if(!this.avaliableList.includes(this.selectedItem))
-    {
-    this.avaliableList.push(this.selectedItem);
+  MoveOneBackward() {
+    if (!this.avaliableList.includes(this.selectedItem)) {
+      this.avaliableList.push(this.selectedItem);
 
-    const index = this.selectedList.indexOf(this.selectedItem, 0);
-    if (index > -1) {
-      this.selectedList.splice(index, 1);
+      const index = this.selectedList.indexOf(this.selectedItem, 0);
+      if (index > -1) {
+        this.selectedList.splice(index, 1);
       }
     }
 
   }
 
 
-  MoveSelectedForward()
-  {
-    if(!this.selectedList.includes(this.selectedItem))
-    {
+  MoveSelectedForward() {
+    if (!this.selectedList.includes(this.selectedItem)) {
 
       this.selectedItems.forEach(element => {
-          this.selectedList.push(element);
-          const index = this.avaliableList.indexOf(element, 0);
-            if (index > -1) {
-               this.avaliableList.splice(index, 1);
-              }
+        this.selectedList.push(element);
+        const index = this.avaliableList.indexOf(element, 0);
+        if (index > -1) {
+          this.avaliableList.splice(index, 1);
+        }
       });
 
       this.selectedItems = [];
-    
+
     }
   }
 
-  MoveSelectedBackward()
-  {
-    if(!this.avaliableList.includes(this.selectedItem))
-    {
+  MoveSelectedBackward() {
+    if (!this.avaliableList.includes(this.selectedItem)) {
 
       this.selectedItems.forEach(element => {
-          this.avaliableList.push(element);
-          const index = this.selectedList.indexOf(element, 0);
-            if (index > -1) {
-               this.selectedList.splice(index, 1);
-              }
+        this.avaliableList.push(element);
+        const index = this.selectedList.indexOf(element, 0);
+        if (index > -1) {
+          this.selectedList.splice(index, 1);
+        }
       });
 
       this.selectedItems = [];
-    
+
     }
   }
 
 
   selectedItem !: any;
-  selectedItems : any[] = [];
+  selectedItems: any[] = [];
 
-  setSelectedItem(item : any)
-  {
-    if(!this.selectedItems.includes(item))
-    {
-    this.selectedItems.push(item);
+  setSelectedItem(forAvailable: boolean, item: any) {
+    let el: any;
+    if (forAvailable) {
+      el = document.getElementById(item.name + 'AV');
     }
-    else
-    {
+    else {
+      el = document.getElementById(item.name + 'SEL');
+    }
+    if (!this.selectedItems.includes(item)) {
+      this.selectedItems.push(item);
+      this.renderer.addClass(el, "selected");
+    }
+    else {
       const index = this.selectedItems.indexOf(item, 0);
       if (index > -1) {
         this.selectedItems.splice(index, 1);
-        }
+      }
+      this.renderer.removeClass(el, "selected");
     }
-    console.log(this.selectedItems);
   }
 
 
-  isSelected(item : any)
-  {
-    if(this.selectedItems.includes(item))
-    {
+  isSelected(item: any) {
+    if (this.selectedItems.includes(item)) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
 
-  DragPreviewAvaliable(item : any)
-  {
-    if(!this.selectedItems.includes(item))
-    {
-       this.selectedItems.push(item);
+  DragPreviewAvaliable(item: any) {
+    if (!this.selectedItems.includes(item)) {
+      this.selectedItems.push(item);
     }
     this.selectedItems.forEach(element => {
 
-        let el = document.getElementById(element.id + 'AV');
-        this.renderer.addClass(el,'selected-and-dragged');
+      let el = document.getElementById(element.name + 'AV');
+      this.renderer.addClass(el, 'selected-and-dragged');
     });
   }
 
-  DragPreviewSelected(item : any)
-  {
-    if(!this.selectedItems.includes(item))
-    {
-       this.selectedItems.push(item);
+  DragPreviewSelected(item: any) {
+    if (!this.selectedItems.includes(item)) {
+      this.selectedItems.push(item);
     }
     this.selectedItems.forEach(element => {
 
-        let el = document.getElementById(element.id + 'SEL');
-        this.renderer.addClass(el,'selected-and-dragged');
-      
+      let el = document.getElementById(element.name + 'SEL');
+      this.renderer.addClass(el, 'selected-and-dragged');
+
     });
   }
 
-  DragEnded(){
+  DragEnded() {
 
     this.avaliableList.forEach(element => {
-      let el = document.getElementById(element.id + 'AV');
-      this.renderer.removeClass(el,'selected-and-dragged');
+      let el = document.getElementById(element.name + 'AV');
+      this.renderer.removeClass(el, 'selected-and-dragged');
     });
     this.selectedList.forEach(element => {
-      let el = document.getElementById(element.id + 'SEL');
-      this.renderer.removeClass(el,'selected-and-dragged');
+      let el = document.getElementById(element.name + 'SEL');
+      this.renderer.removeClass(el, 'selected-and-dragged');
     });
   }
 
 
-  setInsertable()
-  {
+  setInsertable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
+      if (this.selectedList.includes(element)) {
 
-       
 
-       let el = document.getElementById(element.id + 'INS');
-    //   this.renderer.addClass(el,'simple-icon-plus');
-       this.renderer.addClass(el,'is-insertable');
+
+        let el = document.getElementById(element.name + 'INS');
+        //   this.renderer.addClass(el,'simple-icon-plus');
+        this.renderer.addClass(el, 'is-insertable');
       }
     });
   }
 
-  removeInsertable()
-  {
+  removeInsertable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
-       let el = document.getElementById(element.id + 'INS');
-   //    this.renderer.removeClass(el,'simple-icon-plus');
-       this.renderer.removeClass(el,'is-insertable');
+      if (this.selectedList.includes(element)) {
+        let el = document.getElementById(element.name + 'INS');
+        //    this.renderer.removeClass(el,'simple-icon-plus');
+        this.renderer.removeClass(el, 'is-insertable');
       }
     });
   }
 
-  setAllInsertable()
-  {
+  setAllInsertable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'INS');
-       this.renderer.addClass(el,'is-insertable');
+      let el = document.getElementById(element.name + 'INS');
+      this.renderer.addClass(el, 'is-insertable');
     });
   }
 
-  removeAllInsertable()
-  {
+  removeAllInsertable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'INS');
-       this.renderer.removeClass(el,'is-insertable');
+      let el = document.getElementById(element.name + 'INS');
+      this.renderer.removeClass(el, 'is-insertable');
     });
   }
 
 
-  setEditable()
-  {
+  setEditable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
-       let el = document.getElementById(element.id + 'EDI');
-      // this.renderer.addClass(el,'simple-icon-pencil');
-       this.renderer.addClass(el,'is-editable');
+      if (this.selectedList.includes(element)) {
+        let el = document.getElementById(element.name + 'EDI');
+        // this.renderer.addClass(el,'simple-icon-pencil');
+        this.renderer.addClass(el, 'is-editable');
       }
     });
   }
 
-  removeEditable()
-  {
+  removeEditable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
-       let el = document.getElementById(element.id + 'EDI');
-   //    this.renderer.removeClass(el,'simple-icon-pencil');
-       this.renderer.removeClass(el,'is-editable');
+      if (this.selectedList.includes(element)) {
+        let el = document.getElementById(element.name + 'EDI');
+        //    this.renderer.removeClass(el,'simple-icon-pencil');
+        this.renderer.removeClass(el, 'is-editable');
       }
     });
   }
 
-  setAllEditable()
-  {
+  setAllEditable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'EDI');
-       this.renderer.addClass(el,'is-editable');
+      let el = document.getElementById(element.name + 'EDI');
+      this.renderer.addClass(el, 'is-editable');
     });
   }
 
-  removeAllEditable()
-  {
+  removeAllEditable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'EDI');
-       this.renderer.removeClass(el,'is-editable');
+      let el = document.getElementById(element.name + 'EDI');
+      this.renderer.removeClass(el, 'is-editable');
     });
   }
 
-  setDeleteable()
-  {
+  setDeleteable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
-       let el = document.getElementById(element.id + 'DEL');
-    //   this.renderer.addClass(el,'simple-icon-trash');
-       this.renderer.addClass(el,'is-deleteable');
+      if (this.selectedList.includes(element)) {
+        let el = document.getElementById(element.name + 'DEL');
+        //   this.renderer.addClass(el,'simple-icon-trash');
+        this.renderer.addClass(el, 'is-deleteable');
       }
     });
   }
 
-  removeDeleteable()
-  {
+  removeDeleteable() {
     this.selectedItems.forEach(element => {
-      if(this.selectedList.includes(element))
-      {
-       let el = document.getElementById(element.id + 'DEL');
-    //   this.renderer.removeClass(el,'simple-icon-trash');
-       this.renderer.removeClass(el,'is-deleteable');
+      if (this.selectedList.includes(element)) {
+        let el = document.getElementById(element.name + 'DEL');
+        //   this.renderer.removeClass(el,'simple-icon-trash');
+        this.renderer.removeClass(el, 'is-deleteable');
       }
     });
   }
 
-  setAllDeleteable()
-  {
+  setAllDeleteable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'DEL');
-       this.renderer.addClass(el,'is-deleteable');
+      let el = document.getElementById(element.name + 'DEL');
+      this.renderer.addClass(el, 'is-deleteable');
     });
   }
 
-  removeAllDeleteable()
-  {
+  removeAllDeleteable() {
     this.selectedList.forEach(element => {
-       let el = document.getElementById(element.id + 'DEL');
-       this.renderer.removeClass(el,'is-deleteable');
+      let el = document.getElementById(element.name + 'DEL');
+      this.renderer.removeClass(el, 'is-deleteable');
     });
   }
 
@@ -361,28 +327,25 @@ export class TwoListDragAndDropComponent extends AppComponentBase {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      if(this.selectedItems.length > 0)
-      {
-      this.selectedItems.forEach(element => {
-        if(!event.container.data.includes(element))
-        {
-        event.container.data.push(element);
+      if (this.selectedItems.length > 0) {
+        this.selectedItems.forEach(element => {
+          if (!event.container.data.includes(element)) {
+            event.container.data.push(element);
+          }
+          const index = event.previousContainer.data.indexOf(element, 0);
+          if (index > -1) {
+            event.previousContainer.data.splice(index, 1);
+          }
+        });
+        this.selectedItems = [];
       }
-        const index = event.previousContainer.data.indexOf(element, 0);
-           if (index > -1) {
-           event.previousContainer.data.splice(index, 1);
-        }
-      });
-      this.selectedItems = [];
-    }
-    else
-    {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+      else {
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex,
+        );
       }
     }
     this.selectedItems = [];
