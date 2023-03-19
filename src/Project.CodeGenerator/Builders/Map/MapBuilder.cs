@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.Personnel.RootEntities;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Project.CodeGenerator
 
             builder.AppendLine("using AutoMapper;");
             builder.AppendLine($"using {namespac}.Dto;");
+            builder.AppendLine($"using {GeneralSetting.ProjectName}.Shared.Dto;");
             builder.AppendLine("");
 
             //namespace
@@ -51,7 +53,15 @@ namespace Project.CodeGenerator
             builder.AppendLine($"            CreateMap<{name}, Create{name}Dto>();");
             builder.AppendLine($"            CreateMap<Update{name}Dto, {name}>();");
             builder.AppendLine($"            CreateMap<{name}, Update{name}Dto>();");
-
+            foreach(var propInfo in _entityType.GetProperties())
+            {
+                if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForDropDown"))
+                {
+                    builder.AppendLine($"            CreateMap<{name}, ListViewDto>()");
+                    builder.AppendLine($"            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.{propInfo.Name}))");
+                    builder.AppendLine($"            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));");
+                }
+            }
             builder.AppendLine("        }");
             builder.AppendLine("    }");
         }

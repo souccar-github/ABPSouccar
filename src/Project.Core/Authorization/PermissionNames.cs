@@ -11,30 +11,27 @@ namespace Project.Authorization
 
         //Auto generate permission names dont remove this line
         //Employees
-        public const string Pages_Employees = "Pages.Employees";
-        public const string Actions_Employees_Create = "Actions.Employees.Create";
-        public const string Actions_Employees_Update = "Actions.Employees.Update";
-        public const string Actions_Employees_Delete = "Actions.Employees.Delete";
-
-        //Countries
-        public const string Pages_Countries = "Pages.Countries";
-        public const string Actions_Countries_Create = "Actions.Countries.Create";
-        public const string Actions_Countries_Update = "Actions.Countries.Update";
-        public const string Actions_Countries_Delete = "Actions.Countries.Delete";
+        public const string Personnel_RootEntities_Read_Employees ="Personnel.RootEntities.Read.Employees";
+        public const string Personnel_RootEntities_Insert_Employees ="Personnel.RootEntities.Insert.Employees";
+        public const string Personnel_RootEntities_Edit_Employees = "Personnel.RootEntities.Edit.Employees";
+        public const string Personnel_RootEntities_Delete_Employees = "Personnel.RootEntities.Delete.Employees";
 
         //Nationalities
-        public const string Pages_Nationalities = "Pages.Nationalities";
-        public const string Actions_Nationalities_Create = "Actions.Nationalities.Create";
-        public const string Actions_Nationalities_Update = "Actions.Nationalities.Update";
-        public const string Actions_Nationalities_Delete = "Actions.Nationalities.Delete";
+        public const string Personnel_Indecies_Read_Nationalities ="Personnel.Indecies.Read.Nationalities";
+        public const string Personnel_Indecies_Insert_Nationalities ="Personnel.Indecies.Insert.Nationalities";
+        public const string Personnel_Indecies_Edit_Nationalities = "Personnel.Indecies.Edit.Nationalities";
+        public const string Personnel_Indecies_Delete_Nationalities = "Personnel.Indecies.Delete.Nationalities";
 
         //Children
-        public const string Pages_Children = "Pages.Children";
-        public const string Actions_Children_Create = "Actions.Children.Create";
-        public const string Actions_Children_Update = "Actions.Children.Update";
-        public const string Actions_Children_Delete = "Actions.Children.Delete";
+        public const string Personnel_Entities_Read_Children ="Personnel.Entities.Read.Children";
+        public const string Personnel_Entities_Insert_Children ="Personnel.Entities.Insert.Children";
+        public const string Personnel_Entities_Edit_Children = "Personnel.Entities.Edit.Children";
+        public const string Personnel_Entities_Delete_Children = "Personnel.Entities.Delete.Children";
 
 
+
+
+        
 
 
     }

@@ -18,8 +18,7 @@
         </button>
         <ul id="dropdown-split" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
           aria-labelledby="button-split">
-          <li role="menuitem"><a class="dropdown-item" href="javascript:;">{{ 'pages.move' | localize }}</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="javascript:;">{{ 'pages.delete' | localize }}</a></li>
+          <li role="menuitem"><a class="dropdown-item" (click)="onDeleteItem()" href="javascript:;">{{ 'pages.deleteMultible' | localize }}</a></li>
         </ul>
       </div>
     </div>

@@ -10,7 +10,6 @@ namespace Project.CodeGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Files : ");
             var assembly = typeof(SouccarAggregate).Assembly;
             var modules = new List<string>();
             Type modulesNames = typeof(ModulesNames);
@@ -21,7 +20,6 @@ namespace Project.CodeGenerator
                 modules.Add(fi.GetValue(null).ToString());
             }
 
-            Console.Read();
             ModulesBuilder.Generate(assembly, modules);
             LocalizationBuilder.Generate(assembly, modules);
             DbContextBuilder.Generate(assembly, modules);

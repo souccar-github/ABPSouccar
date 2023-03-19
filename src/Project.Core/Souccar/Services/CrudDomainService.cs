@@ -1,13 +1,20 @@
-﻿using Abp.Domain.Entities;
+﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Domain.Services;
 using Abp.Domain.Uow;
+using Abp.Extensions;
+using Abp.Linq.Extensions;
+using AutoMapper.Internal;
+using Castle.MicroKernel.Registration;
 using Microsoft.AspNetCore.Http.Metadata;
+using Project.Souccar.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -15,9 +22,11 @@ using System.Threading.Tasks;
 
 namespace Souccar.Services
 {
-    public class CrudDomainService<TEntity> : ICrudDomainService<TEntity> where TEntity : class, IEntity<int>
+    public class CrudDomainService<TEntity, TGetAllInput> : ICrudDomainService<TEntity, TGetAllInput> 
+            where TEntity : class, IEntity<int>
     {
         private readonly IRepository<TEntity> _repository;
+
         public CrudDomainService(IRepository<TEntity> repository)
         {
             _repository = repository;
@@ -109,6 +118,107 @@ namespace Souccar.Services
             }
             var result = _repository.GetAllIncluding(lambdaExp.ToArray()).FirstOrDefault(x=>x.Id == id);
             return result;
+        }
+
+        public async virtual Task<IQueryable<TEntity>> CreateFilteredQuery(TGetAllInput input)
+        {
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public
+                                                        | BindingFlags.Instance
+                                                        | BindingFlags.DeclaredOnly).Where(x => !x.PropertyType.IsEnum && !x.PropertyType.IsListType() && x.PropertyType == typeof(string));
+            Expression lambdaExp = null ;
+            var parameter = Expression.Parameter(typeof(TEntity), "x");
+
+
+            foreach (var item in properties)
+            {
+                var member = Expression.Property(parameter, item.Name);
+                var constant = Expression.Constant(input.GetType().GetProperty("Keyword").GetValue(input).ToString());
+                
+                var containsCall = Expression.Call(
+                    member,
+                    typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                    constant);
+               
+                if (lambdaExp == null)
+                {
+                    lambdaExp = containsCall;
+                }
+                else
+                {
+                    lambdaExp = Expression.Or(lambdaExp, containsCall);
+                }
+            }
+            var expression = Expression.Lambda<Func<TEntity, bool>>(lambdaExp, parameter);
+
+            var list = await GetAllAsync();
+            return list.AsQueryable().Where(expression);
+        }
+
+        public virtual IQueryable<TEntity> CreateFilteredIncludingQuery(TGetAllInput input)
+        {
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public
+                                                        | BindingFlags.Instance
+                                                        | BindingFlags.DeclaredOnly).Where(x => !x.PropertyType.IsEnum && !x.PropertyType.IsListType() && x.PropertyType == typeof(string));
+            Expression lambdaExp = null;
+            var parameter = Expression.Parameter(typeof(TEntity), "x");
+
+
+            foreach (var item in properties)
+            {
+                var member = Expression.Property(parameter, item.Name);
+                var constant = Expression.Constant(input.GetType().GetProperty("Keyword").GetValue(input).ToString());
+
+                var containsCall = Expression.Call(
+                    member,
+                    typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                    constant);
+
+                if (lambdaExp == null)
+                {
+                    lambdaExp = containsCall;
+                }
+                else
+                {
+                    lambdaExp = Expression.Or(lambdaExp, containsCall);
+                }
+            }
+            var expression = Expression.Lambda<Func<TEntity, bool>>(lambdaExp, parameter);
+
+            var list = GetAllIncluding();
+            return list.AsQueryable().Where(expression);
+        }
+
+        public virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, TGetAllInput input)
+        {
+            ISortedResultRequest sortedResultRequest = input as ISortedResultRequest;
+            if (sortedResultRequest != null && !sortedResultRequest.Sorting.IsNullOrWhiteSpace())
+            {
+                return query.OrderBy(sortedResultRequest.Sorting);
+            }
+
+            if (input is ILimitedResultRequest)
+            {
+                return query.OrderByDescending((TEntity e) => e.Id);
+            }
+
+            return query;
+        }
+
+        public virtual IQueryable<TEntity> ApplyPaging(IQueryable<TEntity> query, TGetAllInput input)
+        {
+            IPagedResultRequest pagedResultRequest = input as IPagedResultRequest;
+            if (pagedResultRequest != null)
+            {
+                return query.PageBy(pagedResultRequest);
+            }
+
+            ILimitedResultRequest limitedResultRequest = input as ILimitedResultRequest;
+            if (limitedResultRequest != null)
+            {
+                return query.Take(limitedResultRequest.MaxResultCount);
+            }
+
+            return query;
         }
     }
 }

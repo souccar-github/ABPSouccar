@@ -1,0 +1,35 @@
+<app-list-page-header [title]="title" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
+    [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage"
+    [selectAllState]="selectAllState" (changeDisplayMode)="changeDisplayMode($event)" (addNewItem)="showAddNewModal()"
+    (deleteItem)="deleteItem()" [selectedCount]="selectedCount"
+    (selectAllChange)="selectAllChange($event)" (itemsPerPageChange)="itemsPerPageChange($event)"
+    (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
+</app-list-page-header>
+<context-menu #basicMenu>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('edit',$event.item)">
+        <i class="simple-icon-docs mr-1"></i> <span>{{"Edit" | localize}}</span>
+    </ng-template>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('delete',$event.item)">
+        <i class="simple-icon-trash mr-1"></i><span>{{"Delete" | localize}}</span>
+    </ng-template>
+</context-menu>
+<div class="row">
+    <div class="col-12 list" *ngIf="displayMode==='list'">
+        <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(item)}"
+            *ngFor="let item of data; let i=index" [contextMenu]="basicMenu" [contextMenuSubject]="item">
+            <div class="d-flex flex-grow-1 min-width-zero">
+                <div
+                    class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+
+                    <p class="mb-0 text-muted text-small w-15 w-xs-100">{{item.firstName}}</p>
+                    <p class="mb-0 text-muted text-small w-15 w-xs-100">{{item.lastName}}</p>
+                </div>
+                <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+                    <input type="checkbox" class="custom-control-input" [id]="'customCheck'+i"
+                        [checked]="isSelected(item)" (change)="onSelect(item)">
+                    <label class="custom-control-label" [for]="'customCheck'+i"></label>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

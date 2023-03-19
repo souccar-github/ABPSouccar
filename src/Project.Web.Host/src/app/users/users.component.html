@@ -1,15 +1,13 @@
 <app-list-page-header [title]="title" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
     [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage"
     [selectAllState]="selectAllState" (changeDisplayMode)="changeDisplayMode($event)" (addNewItem)="showAddNewModal()"
+    (deleteItem)="deleteItem()" [selectedCount] = "selectedCount"
     (selectAllChange)="selectAllChange($event)" (itemsPerPageChange)="itemsPerPageChange($event)"
     (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
 </app-list-page-header>
 <context-menu #basicMenu>
-    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('copy',$event.item)">
-        <i class="simple-icon-docs mr-1"></i> <span>{{"Copy" | localize}}</span>
-    </ng-template>
-    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('move-to-archive',$event.item)">
-        <i class="simple-icon-drawer mr-1"></i> <span>{{"MoveToArchive" | localize}}</span>
+    <ng-template contextMenuItem let-item (execute)="onContextMenuClick('edit',$event.item)">
+        <i class="simple-icon-docs mr-1"></i> <span>{{"Edit" | localize}}</span>
     </ng-template>
     <ng-template contextMenuItem let-item (execute)="onContextMenuClick('delete',$event.item)">
         <i class="simple-icon-trash mr-1"></i><span>{{"Delete" | localize}}</span>

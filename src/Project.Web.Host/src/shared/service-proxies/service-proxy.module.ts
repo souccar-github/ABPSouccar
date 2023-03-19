@@ -8,6 +8,9 @@ import * as SideBarProxies from './sidebar.service';
 @NgModule({
     providers: [
         ApiServiceProxies.RoleServiceProxy,
+        ApiServiceProxies.EmployeeServiceProxy,
+        ApiServiceProxies.ChildrenServiceProxy,
+        ApiServiceProxies.NationalityServiceProxy,
         ApiServiceProxies.SessionServiceProxy,
         ApiServiceProxies.TenantServiceProxy,
         ApiServiceProxies.UserServiceProxy,

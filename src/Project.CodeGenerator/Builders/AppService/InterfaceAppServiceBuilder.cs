@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralizeService.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,15 +27,18 @@ namespace Project.CodeGenerator
             builder.AppendLine("using Abp.Application.Services;");
             builder.AppendLine($"using {namespac}.Dto;");
             builder.AppendLine("using Souccar.Services;");
+            builder.AppendLine($"using {GeneralSetting.ProjectName}.Shared.Dto;");
+            builder.AppendLine($"using {GeneralSetting.ProjectName}.Souccar.Application.Dtos;");
+
             builder.AppendLine("");
 
             //namespace
             builder.AppendLine($"namespace {namespac}.Services");
             builder.AppendLine("{");
 
-            builder.AppendLine($"    public interface I{entityName}AppService : ISouccarAppService<{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto,Read{entityName}Dto>");
+            builder.AppendLine($"    public interface I{entityName}AppService : ISouccarAppService<{entityName}Dto,Create{entityName}Dto,Update{entityName}Dto,Read{entityName}Dto ,SouccarPagedResultRequestDto>");
             builder.AppendLine( "    {");
-
+            builder.AppendLine($"        Task<List<ListViewDto>> Get{PluralizationProvider.Pluralize(entityName)}LookUp();");
             builder.AppendLine("    }");
             builder.AppendLine("}");
 

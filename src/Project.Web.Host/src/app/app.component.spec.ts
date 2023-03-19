@@ -18,12 +18,12 @@ import { ServiceProxyModule } from "../shared/service-proxies/service-proxy.modu
 import { SharedModule } from "../shared/shared.module";
 
 // layout
-import { HeaderComponent } from "./layout/header.component";
-import { HeaderLeftNavbarComponent } from "./layout/header-left-navbar.component";
-import { HeaderLogoComponent } from "./layout/header-logo.component";
-import { HeaderUserMenuComponent } from "./layout/header-user-menu.component";
-import { FooterComponent } from "./layout/footer.component";
-import { SidebarComponent } from "./layout/sidebar.component";
+import { HeaderComponent } from "./layout/header/header.component";
+import { HeaderLeftNavbarComponent } from "./layout/header/header-left-navbar.component";
+import { HeaderLogoComponent } from "./layout/header/header-logo.component";
+import { HeaderUserMenuComponent } from "./layout/header/header-user-menu.component";
+import { FooterComponent } from "./layout/footer/footer.component";
+import { SidebarComponent } from "./layout/sidebar/sidebar.component";
 
 describe("AppComponent", () => {
   beforeEach(() => {

@@ -8,6 +8,9 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { TwoListDragAndDropComponent } from './widgets/two-lists-drag-and-drop/two_list_drag_and_drop.component';
+import { EmployeeComponent } from './personnel/root-entities/employee/employee.component';
+import { ChildrenComponent } from './personnel/entities/children/children.component';
+import { NationalityComponent } from './personnel/indecies/nationality/nationality.component';
 
 @NgModule({
     imports: [
@@ -21,9 +24,21 @@ import { TwoListDragAndDropComponent } from './widgets/two-lists-drag-and-drop/t
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
-                    { path: 'two-lists', component: TwoListDragAndDropComponent }
+                    { path: 'two-lists', component: TwoListDragAndDropComponent },
+                    {
+                        path: 'personnel/employees',
+                        component: EmployeeComponent,
+                        children: [
+                            { path: 'children', component: ChildrenComponent, data: { permission: 'Personnel.Entities.Read.Children' }, canActivate: [AppRouteGuard] }
+                        ],
+                        data: { permission: 'Personnel.RootEntities.Read.Employees' }, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'personnel/nationalities', component: NationalityComponent, data: { permission: 'Personnel.Indecies.Read.Nationalities' }, canActivate: [AppRouteGuard]
+                    }
                 ]
-            }
+            },
+
         ])
     ],
     exports: [RouterModule]

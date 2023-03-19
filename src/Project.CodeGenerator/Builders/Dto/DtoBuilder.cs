@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper.Internal;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Project.CodeGenerator
     {
         private readonly Type _entityType;
         private readonly string _prefix;
+        private readonly string _postfix;
         private StringBuilder builder;
         public DtoBuilder(Type entityType, string prefix = "")
         {
@@ -24,6 +26,7 @@ namespace Project.CodeGenerator
             builder.AppendLine("using System;");
             builder.AppendLine("using Abp.Application.Services.Dto;");
             builder.AppendLine("using System.Collections.Generic;");
+            builder.AppendLine("using Project.Souccar.Application.Dtos;");
             GenerateUsings();
             builder.AppendLine("");
 
@@ -63,7 +66,7 @@ namespace Project.CodeGenerator
 
             foreach (var propInfo in listProperties)
             {
-                var _namespace = propInfo.PropertyType.GetProperties().FirstOrDefault().PropertyType.Namespace;
+                var _namespace = propInfo.PropertyType.GenericTypeArguments.FirstOrDefault().Namespace;
                 if (!builder.ToString().Contains(_namespace))
                 {
                     builder.AppendLine($"using {_namespace}.Dto;");
@@ -71,18 +74,17 @@ namespace Project.CodeGenerator
             }
             foreach (var propInfo in enumProperties)
             {
-                var _namespace = propInfo.PropertyType.GenericTypeArguments[0].Namespace;
+                var _namespace = propInfo.PropertyType.Namespace;
                 if (!builder.ToString().Contains(_namespace))
                 {
                     builder.AppendLine($"using {_namespace};");
                 }
             }
         }
-            private void GenerateClass()
+        private void GenerateClass()
         {
-            builder.AppendLine($"   public class {_prefix}{_entityType.Name}Dto : EntityDto<{GeneralSetting.DataTypeId}>");
+            builder.AppendLine($"   public class {_prefix}{_entityType.Name}{_postfix}Dto : EntityDto<{GeneralSetting.DataTypeId}>");
             builder.AppendLine("    {");
-
             #region properties
             if (_entityType.BaseType.Name.Contains("SouccarIndex"))
             {
@@ -92,7 +94,7 @@ namespace Project.CodeGenerator
 
             var properties = _entityType.GetProperties(BindingFlags.Public
                                                         | BindingFlags.Instance
-                                                        | BindingFlags.DeclaredOnly);
+                                                        | BindingFlags.DeclaredOnly).Where(x => !x.PropertyType.IsEnum && !x.PropertyType.IsListType());
             var refProperties = _entityType.GetProperties()
                 .Where(x => x.PropertyType.BaseType != null
                     && x.PropertyType.BaseType.BaseType != null
@@ -107,12 +109,12 @@ namespace Project.CodeGenerator
                 .ToList();
 
 
-            
+
             foreach (var propInfo in properties)
             {
                 if (_prefix == "Read")
                 {
-                    if (propInfo.CustomAttributes.Count() > 0 && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Count() > 0)
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x=>x.MemberName).Contains("ForGridView"))
                     {
                         var attribute = propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.FirstOrDefault(x => x.MemberName == "ForGridView");
                         if ((Boolean)attribute.TypedValue.Value == true)
@@ -124,7 +126,11 @@ namespace Project.CodeGenerator
                 }
                 else
                 {
-                    GenerateProperty(propInfo);
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") == null 
+                        || (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && !propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForDropDown")))
+                    {
+                        GenerateProperty(propInfo);
+                    }
                 }
             }
 
@@ -132,7 +138,7 @@ namespace Project.CodeGenerator
             {
                 if (_prefix == "Read")
                 {
-                    if (propInfo.CustomAttributes.Count() > 0 && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Count() > 0)
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForGridView"))
                     {
                         var attribute = propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.FirstOrDefault(x => x.MemberName == "ForGridView");
                         if ((Boolean)attribute.TypedValue.Value == true)
@@ -140,11 +146,15 @@ namespace Project.CodeGenerator
                             GenerateRefProperty(propInfo);
                         }
                     }
-                      
+
                 }
                 else
                 {
-                    GenerateRefProperty(propInfo);
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") == null
+                        || (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && !propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForDropDown")))
+                    {
+                        GenerateRefProperty(propInfo);
+                    }
                 }
             }
 
@@ -152,7 +162,7 @@ namespace Project.CodeGenerator
             {
                 if (_prefix == "Read")
                 {
-                    if (propInfo.CustomAttributes.Count() > 0 && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Count() > 0)
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForGridView"))
                     {
                         var attribute = propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.FirstOrDefault(x => x.MemberName == "ForGridView");
                         if ((Boolean)attribute.TypedValue.Value == true)
@@ -164,7 +174,11 @@ namespace Project.CodeGenerator
                 }
                 else
                 {
-                    GenerateListProperty(propInfo);
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") == null
+                        || (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && !propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForDropDown")))
+                    {
+                        GenerateListProperty(propInfo);
+                    }
                 }
             }
 
@@ -172,7 +186,7 @@ namespace Project.CodeGenerator
             {
                 if (_prefix == "Read")
                 {
-                    if (propInfo.CustomAttributes.Count() > 0 && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Count() > 0)
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForGridView"))
                     {
                         var attribute = propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.FirstOrDefault(x => x.MemberName == "ForGridView");
                         if ((Boolean)attribute.TypedValue.Value == true)
@@ -184,12 +198,15 @@ namespace Project.CodeGenerator
                 }
                 else
                 {
-                    GenerateEnumProperty(propInfo);
+                    if (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") == null
+                        || (propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute") != null && !propInfo.CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "SouccarUIPAttribute").NamedArguments.Select(x => x.MemberName).Contains("ForDropDown")))
+                    {
+                        GenerateEnumProperty(propInfo);
+                    }
                 }
             }
 
             #endregion
-
             builder.AppendLine("    }");
         }
 

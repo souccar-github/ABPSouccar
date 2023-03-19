@@ -17,7 +17,7 @@ namespace Project.CodeGenerator
         }
         public static string GetListText(this PropertyInfo propertyInfo,string _prefix)
         {
-            var propType = propertyInfo.PropertyType.GetProperties().FirstOrDefault().PropertyType.Name;
+            var propType = propertyInfo.PropertyType.GenericTypeArguments.FirstOrDefault().Name;
             var name = propertyInfo.Name;
 
             return $"public List<{_prefix}{propType}Dto> {name} " + "{ get; set; }";
@@ -25,7 +25,7 @@ namespace Project.CodeGenerator
         public static string GetEnumText(this PropertyInfo propertyInfo)
         {
             var name = propertyInfo.Name;
-            var propType = propertyInfo.PropertyType.GenericTypeArguments[0].Name;
+            var propType = propertyInfo.PropertyType.Name;
 
             return $"public {propType} {name} " + "{ get; set; }";
         }

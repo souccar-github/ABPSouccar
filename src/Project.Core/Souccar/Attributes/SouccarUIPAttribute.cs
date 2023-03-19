@@ -10,5 +10,6 @@ namespace Project.Souccar.Attributes
     public class SouccarUIPAttribute : Attribute
     {
         public bool ForGridView { get; set; }
+        public bool ForDropDown { get; set; }
     }
 }

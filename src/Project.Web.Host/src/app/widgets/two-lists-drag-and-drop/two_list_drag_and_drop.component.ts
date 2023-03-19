@@ -18,7 +18,6 @@ export class ItemWithPermission {
 @Component({
   selector: 'app-two-list-drag-and-drop',
   templateUrl: './two_list_drag_and_drop.component.html',
-  styleUrls: ['./two_list_drag_and_drop.component.css'],
 })
 export class TwoListDragAndDropComponent extends AppComponentBase {
 

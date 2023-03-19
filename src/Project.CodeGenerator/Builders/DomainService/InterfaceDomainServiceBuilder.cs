@@ -24,6 +24,7 @@ namespace Project.CodeGenerator
 
             builder.AddDefaultNamespaces();
             builder.AppendLine("using Abp.Domain.Services;");
+            builder.AppendLine($"using {GeneralSetting.ProjectName}.Souccar.Application.Dtos;");
             builder.AppendLine($"using {namespac}.Services;");
             builder.AppendLine($"using Souccar.Services;");
             builder.AppendLine("");
@@ -32,7 +33,7 @@ namespace Project.CodeGenerator
             builder.AppendLine($"namespace {namespac}.Services");
             builder.AppendLine("{");
 
-            builder.AppendLine($"    public interface I{entityName}DomainService : ICrudDomainService<{entityName}>");
+            builder.AppendLine($"    public interface I{entityName}DomainService : ICrudDomainService<{entityName}, SouccarPagedResultRequestDto>");
             builder.AppendLine("     {");
 
             builder.AppendLine("    }");

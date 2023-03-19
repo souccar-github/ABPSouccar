@@ -1,7 +1,7 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-// import { Hotkey, HotkeysService } from 'angular2-hotkeys';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import {
   PagedListingComponentBase,
@@ -35,14 +35,14 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   displayMode = 'list';
   itemOrder = { label: this.l("FullName"), value: "fullName" };
   itemOptionsOrders = [{ label: this.l("FullName"), value: "fullName" },
-    { label: this.l("Username"), value: "userName" }];
+  { label: this.l("Username"), value: "userName" }];
   itemsPerPage = 10;
   selectAllState = '';
   selected: UserDto[] = [];
   data: UserDto[] = [];
   currentPage = 1;
   search = '';
-
+  selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
 
@@ -50,20 +50,20 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   @ViewChild('addNewModalRef', { static: true }) addNewModalRef: CreateUserDialogComponent;
 
   constructor(
-    // private hotkeysService: HotkeysService, 
+    private hotkeysService: HotkeysService,
     injector: Injector,
     private _userService: UserServiceProxy,
     private _modalService: BsModalService
   ) {
     super(injector);
-    // this.hotkeysService.add(new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
-    //   this.selected = [...this.data];
-    //   return false;
-    // }));
-    // this.hotkeysService.add(new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
-    //   this.selected = [];
-    //   return false;
-    // }));
+    this.hotkeysService.add(new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
+      this.selected = [...this.data];
+      return false;
+    }));
+    this.hotkeysService.add(new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
+      this.selected = [];
+      return false;
+    }));
   }
 
   ngOnInit(): void {
@@ -91,6 +91,59 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     });
   }
 
+  showEditModal(id: number): void {
+    let EditUserDialog = this._modalService.show(
+      EditUserDialogComponent,
+      {
+        class: 'modal-lg',
+        initialState: {
+          id: id,
+        },
+      }
+    );
+    EditUserDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+
+  }
+
+  protected delete(entity: UserDto): void {
+    abp.message.confirm(
+      this.l('UserDeleteWarningMessage', this.selected.length, 'Users'),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._userService.delete(entity.id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            this.refresh();
+          });
+        }
+      }
+    );
+  }
+
+  deleteItem(): void {
+    if (this.selected.length == 0) {
+      abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
+    }
+    else {
+      abp.message.confirm(
+        this.l('UserDeleteWarningMessage', this.selected.length, 'Users'),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            this.selected.forEach(element => {
+              this._userService.delete(element.id).subscribe(() => {
+                abp.notify.success(this.l('SuccessfullyDeleted'));
+                this.refresh();
+              });
+            });
+          }
+        }
+      );
+    }
+  }
+
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', orderBy: string = ''): void {
     let request: PagedUsersRequestDto = new PagedUsersRequestDto();
     search = '';
@@ -102,7 +155,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     request.isActive = this.isActive;
     request.skipCount = (currentPage - 1) * pageSize;
     request.maxResultCount = this.itemsPerPage;
-    this.list(request, this.pageNumber,() => { });
+    this.list(request, this.pageNumber, () => { });
   }
 
   searchKeyUp(event): void {
@@ -111,7 +164,16 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   }
 
   onContextMenuClick(action: string, item: UserDto): void {
-    console.log('onContextMenuClick -> action :  ', action, ', item.title :', item.fullName);
+    switch (action) {
+      case "delete":
+        this.delete(item);
+        break;
+      case "edit":
+        this.showEditModal(item.id);
+        break;
+      default:
+        break;
+    }
   }
 
   itemsPerPageChange(perPage: number): void {
@@ -129,6 +191,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       this.selected.push(item);
     }
     this.setSelectAllState();
+    this.selectedCount = this.selected.length;
   }
 
   setSelectAllState(): void {
@@ -148,14 +211,6 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       this.selected = [];
     }
     this.setSelectAllState();
-  }
-
-  createUser(): void {
-    this.showCreateOrEditUserDialog();
-  }
-
-  editUser(user: UserDto): void {
-    this.showCreateOrEditUserDialog(user.id);
   }
 
   public resetPassword(user: UserDto): void {
@@ -195,21 +250,6 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
         this.setSelectAllState();
         this.showPaging(result, pageNumber);
       });
-  }
-
-  protected delete(user: UserDto): void {
-    abp.message.confirm(
-      this.l('UserDeleteWarningMessage', user.fullName),
-      undefined,
-      (result: boolean) => {
-        if (result) {
-          this._userService.delete(user.id).subscribe(() => {
-            abp.notify.success(this.l('SuccessfullyDeleted'));
-            this.refresh();
-          });
-        }
-      }
-    );
   }
 
   private showResetPasswordUserDialog(id?: number): void {

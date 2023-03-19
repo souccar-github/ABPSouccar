@@ -31,14 +31,18 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
 // layout
 import {WidgetsModule} from './widgets/widgets.module';
 import {LayoutModule} from './layout/layout.module';
+import {PersonnelModule} from './personnel/personnel.module';
 import { ContentTemplateModule } from './layout/content-template/content-template.module';
 import {TwoListDragAndDropComponent} from './widgets/two-lists-drag-and-drop/two_list_drag_and_drop.component'
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { StateButtonComponent } from './widgets/state-button/state-button.component';
 
 
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { HotkeyModule } from 'angular2-hotkeys';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 
 @NgModule({
@@ -68,19 +72,24 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     HttpClientJsonpModule,
     ModalModule.forChild(),
     BsDropdownModule,
-    CollapseModule,
+    CollapseModule,    
     PerfectScrollbarModule,
     TabsModule,
     AppRoutingModule,
     ServiceProxyModule,
+    HotkeyModule.forRoot(),
     SharedModule,
     NgxPaginationModule,
     WidgetsModule,
     LayoutModule,
+    PersonnelModule,
     TranslateModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    DragDropModule
+    DragDropModule,
+    ContextMenuModule.forRoot({
+      useBootstrap4: true,
+    })
   ],
   providers: [
   ],

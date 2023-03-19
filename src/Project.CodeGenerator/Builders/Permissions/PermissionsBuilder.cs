@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Abp.Domain.Entities;
+using System.Drawing.Drawing2D;
 
 namespace Project.CodeGenerator
 {
@@ -62,15 +64,17 @@ namespace Project.CodeGenerator
                 {
                     if (!text.Contains(entity.Name.Plural()))
                     {
-                        var page = $"Pages_{entity.Name.Plural()}";
-                        var create = $"Actions_{entity.Name.Plural()}_Create";
-                        var update = $"Actions_{entity.Name.Plural()}_Update";
-                        var delete = $"Actions_{entity.Name.Plural()}_Delete";
+                        var module = entity.FullName.Split('.')[1];
+                        var permType = entity.FullName.Split('.')[2];
+                        var read = $"{module}_{permType}_Read_{entity.Name.Plural()}";
+                        var create = $"{module}_{permType}_Insert_{entity.Name.Plural()}";
+                        var update = $"{module}_{permType}_Edit_{entity.Name.Plural()}";
+                        var delete = $"{module}_{permType}_Delete_{entity.Name.Plural()}";
 
                         var permissionViewModel = new PermissionViewModel()
                         {
-                            Entity = entity.Name,
-                            Page = !text.Contains(page) ? false : true,
+                            Entity = entity,
+                            Read = !text.Contains(read) ? false : true,
                             Create = !text.Contains(create) ? false : true,
                             Update = !text.Contains(update) ? false : true,
                             Delete = !text.Contains(delete) ? false : true
@@ -82,44 +86,61 @@ namespace Project.CodeGenerator
             return list;
         }
 
+        private static string GetPermissionString(string str)
+        {
+            return str.Replace('_','.');
+        }
+
         private static Tuple<string,string> GeneratePermissions(List<PermissionViewModel> list)
         {
             var permissionBuilder = new StringBuilder();
             var providerBuilder = new StringBuilder();
             foreach (var item in list)
             {
+                var entity = item.Entity;
+                var module = entity.FullName.Split('.')[1];
+                var permType = entity.FullName.Split('.')[2];
+                var read = $"{module}_{permType}_Read_{entity.Name.Plural()}";
+                var create = $"{module}_{permType}_Insert_{entity.Name.Plural()}";
+                var update = $"{module}_{permType}_Edit_{entity.Name.Plural()}";
+                var delete = $"{module}_{permType}_Delete_{entity.Name.Plural()}";
+
                 permissionBuilder.AppendLine();
-                permissionBuilder.AppendLine("        //" + item.Entity.Plural());
+                permissionBuilder.AppendLine("        //" + entity.Name.Plural());
 
                 providerBuilder.AppendLine();
-                providerBuilder.AppendLine("            //" + item.Entity.Plural());
+                providerBuilder.AppendLine("            //" + entity.Name.Plural());
 
-                if (!item.Page)
+                if (!item.Read)
                 {
-                    var pageStr = $"Pages_{item.Entity.Plural()}";
-                    permissionBuilder.AppendLine($"        public const string {pageStr} = \"Pages.{item.Entity.Plural()}\";");
-                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{pageStr}, L(\"{item.Entity}\"));");
+                    var str = $"{module}_{permType}_Read_{entity.Name.Plural()}";
+                    var permissionString = GetPermissionString(str);
+                    permissionBuilder.AppendLine($"        public const string {str} =\"{permissionString}\";");
+                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{str}, L(\"{entity.Name}\"));");
                 }
 
                 if(!item.Create)
                 {
-                    var pageStr = $"Actions_{item.Entity.Plural()}_Create";
-                    permissionBuilder.AppendLine($"        public const string {pageStr} = \"Actions.{item.Entity.Plural()}.Create\";");
-                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{pageStr}, L(\"CreateNew{item.Entity}\"));");
+                    var str = $"{module}_{permType}_Insert_{entity.Name.Plural()}";
+                    var permissionString = GetPermissionString(str);
+                    permissionBuilder.AppendLine($"        public const string {str} =\"{permissionString}\";");
+                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{str}, L(\"CreateNew{entity.Name}\"));");
                 }
 
                 if (!item.Update)
                 {
-                    var pageStr = $"Actions_{item.Entity.Plural()}_Update";
-                    permissionBuilder.AppendLine($"        public const string {pageStr} = \"Actions.{item.Entity.Plural()}.Update\";");
-                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{pageStr}, L(\"Edit{item.Entity}\"));");
+                    var str = $"{module}_{permType}_Edit_{entity.Name.Plural()}";
+                    var permissionString = GetPermissionString(str);
+                    permissionBuilder.AppendLine($"        public const string {str} = \"{permissionString}\";");
+                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{str}, L(\"Edit{entity.Name}\"));");
                 }
 
                 if (!item.Delete)
                 {
-                    var pageStr = $"Actions_{item.Entity.Plural()}_Delete";
-                    permissionBuilder.AppendLine($"        public const string {pageStr} = \"Actions.{item.Entity.Plural()}.Delete\";");
-                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{pageStr}, L(\"Delete{item.Entity}\"));");
+                    var str = $"{module}_{permType}_Delete_{entity.Name.Plural()}";
+                    var permissionString = GetPermissionString(str);
+                    permissionBuilder.AppendLine($"        public const string {str} = \"{permissionString}\";");
+                    providerBuilder.AppendLine($"            context.CreatePermission(PermissionNames.{str}, L(\"Delete{entity.Name}\"));");
                 }
             }
             return Tuple.Create(permissionBuilder.ToString(), providerBuilder.ToString());
@@ -128,8 +149,8 @@ namespace Project.CodeGenerator
 
     internal class PermissionViewModel
     {
-        public string Entity { get; set; }
-        public bool Page { get; set; }
+        public Type Entity { get; set; }
+        public bool Read { get; set; }
         public bool Create { get; set; }
         public bool Delete { get; set; }
         public bool Update { get; set; }

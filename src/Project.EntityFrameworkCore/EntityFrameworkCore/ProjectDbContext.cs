@@ -4,11 +4,12 @@ using Project.Authorization.Roles;
 using Project.Authorization.Users;
 using Project.MultiTenancy;
 // Dont remove this line Auto generate usings
-using Project.Employees.RootEntities;
+using Project.Personnel.RootEntities;
 
-using Project.Employees.Indecies;
+using Project.Personnel.Indecies;
 
-using Project.Employees.Entities;
+using Project.Personnel.Entities;
+
 
 
 
@@ -21,11 +22,11 @@ namespace Project.EntityFrameworkCore
         //DBSets Auto generate dont remove this line
        public DbSet<Employee> Employees{ get; set; }
 
-       public DbSet<Country> Countries{ get; set; }
-
        public DbSet<Nationality> Nationalities{ get; set; }
 
        public DbSet<Children> Children{ get; set; }
+
+         
 
 
 

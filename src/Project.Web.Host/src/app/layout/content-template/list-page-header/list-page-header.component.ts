@@ -24,6 +24,8 @@ export class ListPageHeaderComponent extends AppComponentBase {
 
   @Output() changeDisplayMode: EventEmitter<string> = new EventEmitter<string>();
   @Output() addNewItem: EventEmitter<any> = new EventEmitter();
+  @Output() deleteItem: EventEmitter<any> = new EventEmitter();
+  @Output() editItem: EventEmitter<any> = new EventEmitter();
   @Output() selectAllChange: EventEmitter<any> = new EventEmitter();
   @Output() searchKeyUp: EventEmitter<any> = new EventEmitter();
   @Output() itemsPerPageChange: EventEmitter<any> = new EventEmitter();
@@ -42,6 +44,16 @@ export class ListPageHeaderComponent extends AppComponentBase {
   onAddNewItem(): void {
     this.addNewItem.emit(null);
   }
+
+
+  onDeleteItem(): void {
+    this.deleteItem.emit(null);
+  }
+
+  onEditItem(): void {
+    this.editItem.emit(null);
+  }
+
   selectAll(event): void  {
     this.selectAllChange.emit(event);
   }

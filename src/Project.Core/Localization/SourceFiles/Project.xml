@@ -147,5 +147,11 @@
     <text name="EditCountry">Edit Country</text>
     <text name="DeleteCountry">Delete Country</text>
     <text name="DateOfBirth">Date Of Birth</text>
+    <text name="Child">Child</text>
+    <text name="CreateNewChild">Create New Child</text>
+    <text name="EditChild">Edit Child</text>
+    <text name="DeleteChild">Delete Child</text>
+    <text name="Parent">Parent</text>
+    <text name="NameForDropDown">Name For Drop Down</text>
   </texts>
 </localizationDictionary>

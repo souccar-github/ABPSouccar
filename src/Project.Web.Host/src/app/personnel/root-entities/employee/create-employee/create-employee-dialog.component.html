@@ -1,0 +1,55 @@
+<form class="form-horizontal" autocomplete="off" #createEmployeeModal="ngForm" (ngSubmit)="save()">
+  <abp-modal-header [title]="'CreateNewEmployee' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  <div class="modal-body">
+    <tabset>
+      <tab [heading]="'EmployeeDetails' | localize" class="pt-3 px-2">
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="employee.firstName">
+            {{ "FirstName" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" name="firstName" id="firstName" required maxlength="32"
+              [(ngModel)]="employee.firstName" #firstNameModel="ngModel" #firstNameEl />
+            <abp-validation-summary [control]="firstNameModel" [controlEl]="firstNameEl"></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="employee.lastName">
+            {{ "LastName" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" name="lastName" id="lastName" required maxlength="32"
+              [(ngModel)]="employee.lastName" #lastNameModel="ngModel" #lastNameEl />
+            <abp-validation-summary [control]="lastNameModel" [controlEl]="lastNameEl"></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="employee.nationalityId">
+            {{ "Nationality" | localize }}
+          </label>
+          <div class="col-md-9 ">
+            <select class="form-control" aria-label="Nationalities" required [(ngModel)]="employee.nationalityId"
+              name="nationalityId" #nationalityIdModel="ngModel" #nationalityIdEl>
+              <option selected>{{"SelectNationality" | localize}}</option>
+              <option *ngFor="let item of nationalities" value={{item.id}}>{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="employee.gender">
+            {{ "Gender" | localize }}
+          </label>
+          <div class="col-md-9 ">
+            <select class="form-control" aria-label="genders" required [(ngModel)]="employee.gender" name="gender"
+              #genderModel="ngModel" #genderEl>
+              <option selected>{{"SelectGender" | localize}}</option>
+              <option *ngFor="let item of genders" value={{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createEmployeeModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

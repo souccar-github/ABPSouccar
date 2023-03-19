@@ -82,7 +82,7 @@ namespace Project.Shared.Interceptor
                         await advice.BeforeDeleteAsync(invocation);
                         break;
                     case MethodType.Create:
-                        await advice.BeforeCreateAsync(invocation);
+                        await advice.BeforeInsertAsync(invocation);
                         break;
                     default:
                         break;
@@ -122,7 +122,7 @@ namespace Project.Shared.Interceptor
                                     await advice.AfterUpdateAsync(invocation);
                                     break;
                                 case MethodType.Create:
-                                    await advice.AfterCreateAsync(invocation);
+                                    await advice.AfterInsertAsync(invocation);
                                     break;
                                 default:
                                     break;

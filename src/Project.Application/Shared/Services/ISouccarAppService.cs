@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Souccar.Services
 {
-    public interface ISouccarAppService<TEntityDto,TCreateEntityDto,TUpdateEntityDto,TReadEntityDto> : IApplicationService where TEntityDto : class, IEntityDto<int>
+    public interface ISouccarAppService<TEntityDto,TCreateEntityDto,TUpdateEntityDto,TReadEntityDto, TGetAllInput> : IApplicationService where TEntityDto : class, IEntityDto<int>
                                                                                            where TCreateEntityDto : class, IEntityDto<int>
                                                                                            where TUpdateEntityDto : class, IEntityDto<int>
                                                                                            where TReadEntityDto : class, IEntityDto<int>
+                                                                                           where TGetAllInput : class, ILimitedResultRequest
     {
         Task<IList<TReadEntityDto>> GetAllAsync();
         Task<IList<TReadEntityDto>> GetAllIncludingAsync();
@@ -19,6 +20,8 @@ namespace Souccar.Services
         Task<TEntityDto> GetIncludingAsync(int id);
         Task<TEntityDto> InsertAsync(TCreateEntityDto entity);
         Task<TEntityDto> UpdateAsync(TUpdateEntityDto entity);
+        Task<PagedResultDto<TReadEntityDto>> GetAllIncludingWithInputAsync(TGetAllInput input);
+        Task<PagedResultDto<TReadEntityDto>> GetAllWithInputAsync(TGetAllInput input);
     }
 
     

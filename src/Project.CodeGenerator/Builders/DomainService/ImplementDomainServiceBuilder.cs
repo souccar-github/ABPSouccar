@@ -30,6 +30,7 @@ namespace Project.CodeGenerator
             builder.AppendLine("using System.Linq;");
             builder.AppendLine($"using Abp.Domain.Repositories;");
             builder.AppendLine("using System.Collections.Generic;");
+            builder.AppendLine($"using {GeneralSetting.ProjectName}.Souccar.Application.Dtos;");
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using Souccar.Services;");
             
@@ -40,7 +41,7 @@ namespace Project.CodeGenerator
             builder.AppendLine($"namespace {namespac}.Services");
             builder.AppendLine("{");
 
-            builder.AppendLine($"    public class {entityName}DomainService :CrudDomainService<{entityName}>, I{entityName}DomainService");
+            builder.AppendLine($"    public class {entityName}DomainService :CrudDomainService<{entityName}, SouccarPagedResultRequestDto>, I{entityName}DomainService");
             builder.AppendLine( "    {");
 
             builder.AppendLine($"        private readonly IRepository<{entityName}> _{paramName}Repository;");
