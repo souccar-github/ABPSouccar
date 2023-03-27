@@ -219,6 +219,13 @@
   dependencies:
     "tslib" "^2.1.0"
 
+"@angular/forms@^4.0.0":
+  "integrity" "sha512-EXGutI4GNBptpwkCQdCTxWAlJll8aCV7m3cA1FHZgFP7VNSgYF0pD+PscM5jSeajG30cRjaKxgL4cqj6yMMtww=="
+  "resolved" "https://registry.npmjs.org/@angular/forms/-/forms-4.4.7.tgz"
+  "version" "4.4.7"
+  dependencies:
+    "tslib" "^1.7.1"
+
 "@angular/language-service@~10.0.2":
   "integrity" "sha512-QQLYUjD0T6u2hLNYXUEUbupAGsz5egmhCAckaQojvXCe3SLL/hQsrK4odrNuspy7TvMB0H5ZNEHGlF6m/WLZ3g=="
   "resolved" "https://registry.npmjs.org/@angular/language-service/-/language-service-10.0.14.tgz"
@@ -3080,6 +3087,11 @@
   "integrity" "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww=="
   "resolved" "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   "version" "1.0.0"
+
+"bootstrap@^4.0.0":
+  "integrity" "sha512-51Bbp/Uxr9aTuy6ca/8FbFloBUJZLHwnhTcnjIeRn2suQWsWzcuJhGjKDB5eppVte/8oCdOL3VuwxvZDUggwGQ=="
+  "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.2.tgz"
+  "version" "4.6.2"
 
 "bootstrap@^5.2.3":
   "integrity" "sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ=="
@@ -6401,6 +6413,14 @@
     "file-saver" "^2.0.5"
     "ngx-filesaver" "8.1.0"
 
+"ngx-pagination-bootstrap@^1.6.0":
+  "integrity" "sha512-evdkNoPVqMErflNQOL/uVPUc1ivpwjL6qpedJJLFwWR9jLEXeLSC3cAnDnSAhHMk4o2wX1msiTqswPL81Bj24w=="
+  "resolved" "https://registry.npmjs.org/ngx-pagination-bootstrap/-/ngx-pagination-bootstrap-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "@angular/forms" "^4.0.0"
+    "bootstrap" "^4.0.0"
+
 "ngx-pagination@^5.0.0":
   "integrity" "sha512-KxHES+Dn6pbetytO9ng2GAdclmo4UcwzFmQyVPWh2xRPbAlv5/ezL2xnDVBFMqCoJQaZagvdQ+ZZFbqGWqAvCQ=="
   "resolved" "https://registry.npmjs.org/ngx-pagination/-/ngx-pagination-5.1.1.tgz"
@@ -8996,6 +9016,11 @@
   "version" "1.14.1"
 
 "tslib@^1.13.0":
+  "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
+  "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
+  "version" "1.14.1"
+
+"tslib@^1.7.1":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"

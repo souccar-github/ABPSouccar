@@ -23,7 +23,7 @@ export class SidebarComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;
   menuItems: MenuItem[];
   menuItemsMap: { [key: number]: MenuItem } = {};
-  homeRoute = '/app/home';
+  homeRoute = '/app';
   activatedMenuItems: MenuItem[] = [];
   closedCollapseList = [];
   selectedParentMenu = '';
@@ -393,6 +393,18 @@ export class SidebarComponent extends AppComponentBase implements OnInit {
   //menuItems dont remove this line
   getMenuItems(): MenuItem[] {
     return [
+      new MenuItem(this.l('Personnel'), '', 'iconsminds-equalizer', '', [
+        new MenuItem(
+          this.l('RootEntities'),
+          '/app/personnel',
+          'iconsminds-network',
+          '', [new MenuItem(
+            this.l('Employees'),
+            '/app/personnel/employees',
+            'iconsminds-network',
+            'Personnel.RootEntities.Read.Employees')]
+        ),]),
+      
       new MenuItem(this.l('Security'), '', 'iconsminds-equalizer', '', [
         new MenuItem(
           this.l('Roles'),

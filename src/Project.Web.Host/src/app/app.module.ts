@@ -38,7 +38,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { StateButtonComponent } from './widgets/state-button/state-button.component';
 
 
-
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -75,6 +75,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     CollapseModule,    
     PerfectScrollbarModule,
     TabsModule,
+    PaginationModule.forRoot(),
     AppRoutingModule,
     ServiceProxyModule,
     HotkeyModule.forRoot(),

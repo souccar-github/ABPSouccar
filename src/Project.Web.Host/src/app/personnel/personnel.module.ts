@@ -13,6 +13,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PerfectScrollbarModule,
     FormsModule,
     ReactiveFormsModule,
+    PaginationModule.forRoot(),
     TranslateModule,
     CollapseModule,
     BsDropdownModule.forRoot(),

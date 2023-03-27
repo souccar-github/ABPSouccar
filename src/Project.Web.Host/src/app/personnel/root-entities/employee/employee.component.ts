@@ -29,18 +29,19 @@ class PagedEmployeesRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()]
 })
 export class EmployeeComponent extends PagedListingComponentBase<ReadEmployeeDto> {
-  employees: ReadEmployeeDto[] = [];
   title = "Employees"
   displayMode = 'list';
-  itemOrder = { label: this.l("FullName"), value: "fullName" };
-  itemOptionsOrders = [{ label: this.l("FullName"), value: "fullName" },
-  { label: this.l("Employeename"), value: "employeeName" }];
+  itemOrder = { label: this.l("FirstName"), value: "firstName" };
+  itemOptionsOrders = [{ label: this.l("FirstName"), value: "firstName" },
+  { label: this.l("LastName"), value: "lastName" }];
   itemsPerPage = 10;
   selectAllState = '';
   selected: ReadEmployeeDto[] = [];
   data: ReadEmployeeDto[] = [];
   currentPage = 1;
   search = '';
+  totalItem = 0;
+  totalPage = 0;
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
@@ -71,6 +72,10 @@ export class EmployeeComponent extends PagedListingComponentBase<ReadEmployeeDto
 
   changeOrderBy(item: any): void {
     this.loadData(this.itemsPerPage, 1, this.search, item.value);
+  }
+
+  pageChanged(event: any): void {
+    this.loadData(this.itemsPerPage, event.page, this.search, this.itemOrder.value);
   }
 
   changeDisplayMode(mode): void {
@@ -239,10 +244,10 @@ export class EmployeeComponent extends PagedListingComponentBase<ReadEmployeeDto
         })
       )
       .subscribe((result: ReadEmployeeDtoPagedResultDto) => {
-        this.employees = result.items;
         this.data = result.items;
+        this.totalItem = result.totalCount;
+        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-        this.showPaging(result, pageNumber);
       });
   }
 }

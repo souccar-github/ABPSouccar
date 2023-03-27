@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
   ],
   exports:[
     HeaderComponent,
+    PaginationModule,
     HeaderLeftNavbarComponent,
     HeaderLogoComponent,
     HeaderUserMenuComponent,

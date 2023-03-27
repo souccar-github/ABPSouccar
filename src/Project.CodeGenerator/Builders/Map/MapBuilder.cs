@@ -49,6 +49,7 @@ namespace Project.CodeGenerator
 
             builder.AppendLine($"            CreateMap<{name}, {name}Dto>();");
             builder.AppendLine($"            CreateMap<{name}, Read{name}Dto>();");
+            builder.AppendLine($"            CreateMap<Read{name}Dto, {name}>();");
             builder.AppendLine($"            CreateMap<Create{name}Dto, {name}>();");
             builder.AppendLine($"            CreateMap<{name}, Create{name}Dto>();");
             builder.AppendLine($"            CreateMap<Update{name}Dto, {name}>();");

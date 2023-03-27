@@ -39,21 +39,27 @@ namespace Souccar.Services
             IQueryable<TReadEntityDto> query;
             if (input.Keyword == null)
             {
-                var _list = await GetAllAsync();
+                var _list = await GetAllIncludingAsync();
                 query = _list.AsQueryable();
             }
             else
             {
-                query = MapToReadEntityDto(_domainService.CreateFilteredIncludingQuery(input));
+                var _query = _domainService.CreateFilteredIncludingQuery(input);
+                query = MapToReadEntityDto(_query.ToList()).AsQueryable();
             }
-            int totalCount = await AsyncQueryableExecuter.CountAsync(query).ConfigureAwait(continueOnCapturedContext: false);
-            query = MapToReadEntityDto(_domainService.ApplyPaging(MapToEntityDto(query), input));
-            var list = new PagedResultDto<TReadEntityDto>(totalCount, (await AsyncQueryableExecuter.ToListAsync(MapToEntityDto(query)).ConfigureAwait(continueOnCapturedContext: false)).Select(new Func<TEntity, TReadEntityDto>(MapToReadEntityDto)).ToList());
-            var parameter = Expression.Parameter(typeof(TReadEntityDto), "x");
-            var member = Expression.Property(parameter, input.OrderBy);
-            var finalExpression = Expression.Lambda<Func<TReadEntityDto, object>>(member, parameter);
-            var queryableList = list.Items.AsQueryable();
-            list.Items = queryableList.OrderBy(finalExpression).ToList();
+            int totalCount = query.ToList().Count();
+            IList<TEntity> entityDto = MapToEntityDto(query.ToList());
+            var applyPaging = _domainService.ApplyPaging(entityDto.AsQueryable(), input);
+            query = MapToReadEntityDto(applyPaging.ToList()).AsQueryable();
+            var list = new PagedResultDto<TReadEntityDto>(totalCount, MapToEntityDto(query.ToList()).ToList().Select(new Func<TEntity, TReadEntityDto>(MapToReadEntityDto)).ToList());
+            if (input.OrderBy != null)
+            {
+                var parameter = Expression.Parameter(typeof(TReadEntityDto), "x");
+                var member = Expression.Property(parameter, input.OrderBy);
+                var finalExpression = Expression.Lambda<Func<TReadEntityDto, object>>(member, parameter);
+                var queryableList = list.Items.AsQueryable();
+                list.Items = queryableList.OrderBy(finalExpression).ToList();
+            }
             return list;
         }
         public virtual async Task<IList<TReadEntityDto>> GetAllAsync()
@@ -72,16 +78,22 @@ namespace Souccar.Services
             }
             else
             {
-                query = MapToReadEntityDto(await _domainService.CreateFilteredQuery(input));
+                var _query = await _domainService.CreateFilteredQuery(input);
+                query = MapToReadEntityDto(_query.ToList()).AsQueryable();
             }
             int totalCount = query.ToList().Count() ;
-            query = MapToReadEntityDto(_domainService.ApplyPaging(MapToEntityDto(query), input));
-            var list = new PagedResultDto<TReadEntityDto>(totalCount, MapToEntityDto(query).ToList().Select(new Func<TEntity, TReadEntityDto>(MapToReadEntityDto)).ToList());
-            var parameter = Expression.Parameter(typeof(TReadEntityDto), "x");
-            var member = Expression.Property(parameter, input.OrderBy);
-            var finalExpression = Expression.Lambda<Func<TReadEntityDto, object>>(member, parameter);
-            var queryableList = list.Items.AsQueryable();
-            list.Items = queryableList.OrderBy(finalExpression).ToList();
+            IList<TEntity> entityDto = MapToEntityDto(query.ToList());
+            var applyPaging = _domainService.ApplyPaging(entityDto.AsQueryable(), input);
+            query = MapToReadEntityDto(applyPaging.ToList()).AsQueryable();
+            var list = new PagedResultDto<TReadEntityDto>(totalCount, MapToEntityDto(query.ToList()).ToList().Select(new Func<TEntity, TReadEntityDto>(MapToReadEntityDto)).ToList());
+            if (input.OrderBy != null)
+            {
+                var parameter = Expression.Parameter(typeof(TReadEntityDto), "x");
+                var member = Expression.Property(parameter, input.OrderBy);
+                var finalExpression = Expression.Lambda<Func<TReadEntityDto, object>>(member, parameter);
+                var queryableList = list.Items.AsQueryable();
+                list.Items = queryableList.OrderBy(finalExpression).ToList();
+            }
             return list;
         }
 
@@ -121,14 +133,14 @@ namespace Souccar.Services
             return base.ObjectMapper.Map<TReadEntityDto>(entity);
         }
 
-        protected virtual IQueryable <TReadEntityDto> MapToReadEntityDto(IQueryable< TEntity> entities)
+        protected virtual IList<TReadEntityDto> MapToReadEntityDto(IList< TEntity> entities)
         {
-            return base.ObjectMapper.Map<IQueryable<TReadEntityDto>>(entities);
+            return base.ObjectMapper.Map<IList<TReadEntityDto>>(entities);
         }
 
-        protected virtual IQueryable<TEntity> MapToEntityDto(IQueryable<TReadEntityDto > entities)
+        protected virtual IList<TEntity> MapToEntityDto(IList<TReadEntityDto > entities)
         {
-            return base.ObjectMapper.Map<IQueryable<TEntity>>(entities);
+            return base.ObjectMapper.Map<IList<TEntity>>(entities);
         }
 
     }

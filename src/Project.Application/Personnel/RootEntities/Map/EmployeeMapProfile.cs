@@ -10,6 +10,7 @@ namespace Project.Personnel.RootEntities.Map
         {
             CreateMap<Employee, EmployeeDto>();
             CreateMap<Employee, ReadEmployeeDto>();
+            CreateMap<ReadEmployeeDto, Employee>();
             CreateMap<CreateEmployeeDto, Employee>();
             CreateMap<Employee, CreateEmployeeDto>();
             CreateMap<UpdateEmployeeDto, Employee>();

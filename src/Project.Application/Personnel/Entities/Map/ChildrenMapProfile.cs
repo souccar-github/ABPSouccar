@@ -10,6 +10,7 @@ namespace Project.Personnel.Entities.Map
         {
             CreateMap<Children, ChildrenDto>();
             CreateMap<Children, ReadChildrenDto>();
+            CreateMap<ReadChildrenDto, Children>();
             CreateMap<CreateChildrenDto, Children>();
             CreateMap<Children, CreateChildrenDto>();
             CreateMap<UpdateChildrenDto, Children>();

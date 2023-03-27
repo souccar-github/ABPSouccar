@@ -10,6 +10,7 @@ namespace Project.Personnel.Indecies.Map
         {
             CreateMap<Nationality, NationalityDto>();
             CreateMap<Nationality, ReadNationalityDto>();
+            CreateMap<ReadNationalityDto, Nationality>();
             CreateMap<CreateNationalityDto, Nationality>();
             CreateMap<Nationality, CreateNationalityDto>();
             CreateMap<UpdateNationalityDto, Nationality>();
